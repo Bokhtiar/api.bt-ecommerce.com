@@ -1,36 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Admin = void 0;
+exports.Category = void 0;
 const mongoose_1 = require("mongoose");
-/**Admin database field */
-const adminSchema = new mongoose_1.Schema({
+/**Category table filed */
+const categorySchema = new mongoose_1.Schema({
     name: {
         type: String,
         trim: true,
         required: true,
     },
-    email: {
+    slug: {
         type: String,
         trim: true,
         required: true,
     },
-    phone: {
-        type: Number,
-        trim: true,
-        required: true,
-    },
-    password: {
+    icon: {
         type: String,
-        trim: true,
-        required: true,
+        default: null,
     },
-    role: {
+    banner_image: {
         type: String,
+        default: null,
+    },
+    created_by: {
+        type: mongoose_1.Schema.Types.ObjectId,
         trim: true,
-        required: true,
     },
 }, {
     timestamps: true,
 });
-/**Database name */
-exports.Admin = (0, mongoose_1.model)("Admin", adminSchema);
+/**Database table name deaclear */
+exports.Category = (0, mongoose_1.model)("Category", categorySchema);

@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 import { IAuth } from "../types/admin/auth.types";
 
 /**Admin database field */
-export const adminSchema: Schema = new Schema<IAuth>(
+const adminSchema: Schema = new Schema<IAuth>(
   {
     name: {
       type: String,
