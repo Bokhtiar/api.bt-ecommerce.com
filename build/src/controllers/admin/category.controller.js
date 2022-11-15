@@ -10,12 +10,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.index = void 0;
+const pagination_helper_1 = require("../../helpers/pagination.helper");
+/* List of resources */
 const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.status(200).json({
-            status: true,
-            message: "ok",
-        });
+        const { limit, page } = (0, pagination_helper_1.paginateQueryParams)(req.query);
+        const searchQuery = req.query.query;
+        /* Search from query */
+        // if (searchQuery) {
+        //   const results = await services.company.searchByKey(
+        //     searchQuery.toString()
+        //   );
+        // const totalItems = await services.company.countAll();
+        // const results = await services.company.findAll({ page, limit });
     }
     catch (error) {
         if (error) {
