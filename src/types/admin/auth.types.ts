@@ -6,6 +6,7 @@ export interface IAuth {
   email: string;
   phone: number;
   password: string;
+  role: string;
 }
 
 export interface IAuthCreateOrUpdate {
@@ -13,4 +14,5 @@ export interface IAuthCreateOrUpdate {
   email: string;
   phone: number;
   password: string;
+  role: string;
 }

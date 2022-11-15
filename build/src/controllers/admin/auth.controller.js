@@ -10,9 +10,39 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.register = exports.login = void 0;
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const admin_1 = require("../../services/admin");
 /**login as a admin */
 const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const { email, password } = req.body;
+        /**Check avialable email */
+        const account = yield admin_1.service.Auth.findOneByKey({ email: email });
+        if (!account) {
+            res.status(404).json({
+                status: false,
+                message: "Email or password invalid.",
+            });
+        }
+        /* Compare with password */
+        const result = yield bcrypt.compare(password, account === null || account === void 0 ? void 0 : account.password);
+        if (!result) {
+            return res.status(404).json({
+                status: false,
+                message: "Invalid email or password.",
+            });
+        }
+        /* Generate JWT token */
+        const token = yield jwt.sign({
+            id: account === null || account === void 0 ? void 0 : account._id,
+            name: account === null || account === void 0 ? void 0 : account.name,
+            role: account === null || account === void 0 ? void 0 : account.role,
+        }, process.env.JWT_SECRET, { expiresIn: "1d" });
+        res.status(201).json({
+            status: true,
+            data: token,
+        });
     }
     catch (error) {
         if (error) {
@@ -25,16 +55,35 @@ exports.login = login;
 /**register as a admin */
 const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { name, email, phone, password } = req.body;
+        const { name, email, phone, password, role } = req.body;
+        /**Check exist email */
+        const is_emailExist = yield admin_1.service.Auth.findOneByKey({ email: email });
+        if (is_emailExist) {
+            res.status(409).json({
+                status: false,
+                message: "Email already exist.",
+            });
+        }
+        /**Check exist phone */
+        const is_phoneExist = yield admin_1.service.Auth.findOneByKey({ phone: phone });
+        if (is_phoneExist) {
+            res.status(409).json({
+                status: true,
+                message: "Phone already exist.",
+            });
+        }
+        /**Has password  */
+        const hashPassword = yield bcrypt.hash(password, 10);
         const documents = {
             name,
             email,
             phone,
-            password,
+            password: hashPassword,
+            role,
         };
+        yield admin_1.service.Auth.Registration(documents);
         res.status(201).json({
             status: true,
-            data: documents,
             message: "Admin Created.",
         });
     }
