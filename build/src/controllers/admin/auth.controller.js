@@ -22,7 +22,7 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         if (!account) {
             res.status(404).json({
                 status: false,
-                message: "Email or password invalid.",
+                message: "Invalid email or password.",
             });
         }
         /* Compare with password */

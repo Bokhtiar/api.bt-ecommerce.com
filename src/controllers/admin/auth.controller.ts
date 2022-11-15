@@ -11,13 +11,13 @@ export const login = async (
 ) => {
   try {
     const { email, password } = req.body;
-    
+
     /**Check avialable email */
     const account = await service.Auth.findOneByKey({ email: email });
     if (!account) {
       res.status(404).json({
         status: false,
-        message: "Email or password invalid.",
+        message: "Invalid email or password.",
       });
     }
 
