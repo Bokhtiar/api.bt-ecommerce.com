@@ -19,7 +19,7 @@ const countAll = () => __awaiter(void 0, void 0, void 0, function* () {
 exports.countAll = countAll;
 /* find resources by paginate */
 const findAll = ({ page, limit, }) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield models_1.Models.Category.find({}, { created_by: 0 })
+    return yield models_1.Models.Category.find()
         .sort({ _id: -1 })
         .skip(page * limit - limit)
         .limit(limit)

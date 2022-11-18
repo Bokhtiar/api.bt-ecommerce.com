@@ -22,11 +22,12 @@ const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         //   const results = await services.company.searchByKey(
         //     searchQuery.toString()
         //   );
-        // const totalItems = await services.company.countAll();
-        // const results = await services.company.findAll({ page, limit });
+        const totalItems = yield admin_1.service.Category.countAll();
+        const results = yield admin_1.service.Category.findAll({ page, limit });
         res.status(200).json({
             status: true,
-            message: "ok",
+            data: results,
+            paginate: (0, pagination_helper_1.paginate)({ total_items: totalItems, page, limit }),
         });
     }
     catch (error) {
@@ -41,6 +42,15 @@ exports.index = index;
 const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, icon, banner_image } = req.body;
+        /**Check already exist name */
+        const isExistName = yield admin_1.service.Category.findOneByKey({ name: name });
+        if (isExistName) {
+            return res.status(409).json({
+                status: false,
+                message: "Category already created.",
+            });
+        }
+        /**store documents */
         const documents = {
             name,
             icon,

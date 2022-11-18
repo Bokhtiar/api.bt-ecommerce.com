@@ -18,7 +18,7 @@ export const findAll = async ({
   page: number;
   limit: number;
 }): Promise<ICategory[] | []> => {
-  return await Models.Category.find({}, { created_by: 0 })
+  return await Models.Category.find()
     .sort({ _id: -1 })
     .skip(page * limit - limit)
     .limit(limit)
