@@ -1,4 +1,4 @@
-var slug = require("slug");
+const slug = require('slug')
 import { Models } from "../../models";
 import {
   ICategory,
@@ -44,7 +44,6 @@ export const resourceCreate = async (
     slug: slug(data.name),
     icon: data.icon,
     banner_image: data.banner_image,
-    created_by: data.created_by,
   });
   return await newCategory.save();
 };

@@ -25,8 +25,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validator = void 0;
 const login = __importStar(require("./login.validators"));
+const category = __importStar(require("./category.validators"));
 const register = __importStar(require("./register.validators"));
 exports.validator = {
     login,
+    category,
     register,
 };

@@ -25,6 +25,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.service = void 0;
 const Auth = __importStar(require("./auth.service"));
+const Category = __importStar(require("./category.service"));
 exports.service = {
     Auth,
+    Category,
 };

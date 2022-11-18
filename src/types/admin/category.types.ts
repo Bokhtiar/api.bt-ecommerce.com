@@ -6,13 +6,10 @@ export interface ICategory {
   slug: string;
   icon: string;
   banner_image: string;
-  created_by: Types.ObjectId;
 }
 
 export interface ICategoryCreateOrUpdate {
   name: string;
-  slug: string;
   icon: string;
   banner_image: string;
-  created_by: Types.ObjectId;
-}
+} 

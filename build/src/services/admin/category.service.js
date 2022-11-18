@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.searchByKey = exports.findByIdAndDelete = exports.findByIdAndUpdate = exports.resourceCreate = exports.findById = exports.findOneByKey = exports.findAll = exports.countAll = void 0;
-var slug = require("slug");
+const slug = require('slug');
 const models_1 = require("../../models");
 /**Category count */
 const countAll = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -43,7 +43,6 @@ const resourceCreate = (data) => __awaiter(void 0, void 0, void 0, function* () 
         slug: slug(data.name),
         icon: data.icon,
         banner_image: data.banner_image,
-        created_by: data.created_by,
     });
     return yield newCategory.save();
 });

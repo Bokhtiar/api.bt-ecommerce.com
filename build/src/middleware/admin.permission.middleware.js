@@ -24,7 +24,12 @@ const isAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
         const splitToken = yield token.split(" ")[1];
         const decode = yield jwt.verify(splitToken, process.env.JWT_SECRET);
         if (decode.role == "admin") {
-            req.user = decode;
+            const user = {
+                id: decode.id,
+                name: decode.name,
+                role: decode.role,
+            };
+            req.user = user;
             next();
         }
         else {

@@ -25,6 +25,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.categoryRouter = void 0;
 const express_1 = require("express");
+const admin_1 = require("../../validators/admin");
 const categoryController = __importStar(require("../../controllers/admin/category.controller"));
 exports.categoryRouter = (0, express_1.Router)();
 exports.categoryRouter.get("/", categoryController.index);
+exports.categoryRouter.post("/", admin_1.validator.category.createUpdate, categoryController.store);

@@ -9,7 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.index = void 0;
+exports.store = exports.index = void 0;
+const admin_1 = require("../../services/admin");
 const pagination_helper_1 = require("../../helpers/pagination.helper");
 /* List of resources */
 const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -23,6 +24,10 @@ const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         //   );
         // const totalItems = await services.company.countAll();
         // const results = await services.company.findAll({ page, limit });
+        res.status(200).json({
+            status: true,
+            message: "ok",
+        });
     }
     catch (error) {
         if (error) {
@@ -32,3 +37,26 @@ const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.index = index;
+/**resource store */
+const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { name, icon, banner_image } = req.body;
+        const documents = {
+            name,
+            icon,
+            banner_image,
+        };
+        yield admin_1.service.Category.resourceCreate(documents);
+        res.status(201).json({
+            status: true,
+            message: "Category Created.",
+        });
+    }
+    catch (error) {
+        if (error) {
+            console.log(error);
+            next(error);
+        }
+    }
+});
+exports.store = store;

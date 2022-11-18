@@ -22,10 +22,6 @@ const categorySchema = new mongoose_1.Schema({
         type: String,
         default: null,
     },
-    created_by: {
-        type: mongoose_1.Schema.Types.ObjectId,
-        trim: true,
-    },
 }, {
     timestamps: true,
 });

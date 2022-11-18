@@ -22,10 +22,6 @@ const categorySchema: Schema = new Schema<ICategory>(
       type: String,
       default: null,
     },
-    created_by: {
-      type: Schema.Types.ObjectId,
-      trim: true,
-    },
   },
   {
     timestamps: true,
