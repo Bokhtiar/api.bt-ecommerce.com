@@ -1,4 +1,4 @@
-const slug = require('slug')
+const slug = require("slug");
 import { Models } from "../../models";
 import {
   ICategory,
@@ -53,7 +53,14 @@ export const findByIdAndUpdate = async (
   id: string,
   data: ICategoryCreateOrUpdate
 ): Promise<ICategory | null> => {
-  return await Models.Category.findByIdAndUpdate(id, { $set: { ...data } });
+  return await Models.Category.findByIdAndUpdate(id, {
+    $set: {
+      name: data.name,
+      slug: slug(data.name),
+      icon: data.icon,
+      banner_image: data.banner_image,
+    },
+  });
 };
 
 /**specific resource findByIdAndDelete  */

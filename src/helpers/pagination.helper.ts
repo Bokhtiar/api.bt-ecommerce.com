@@ -1,4 +1,7 @@
-import { PaginationQueryType, PaginateType } from "../types/admin/paginate.types";
+import {
+  PaginationQueryType,
+  PaginateType,
+} from "../types/admin/paginate.types";
 
 const nextPage = (page: number, totalPage: number) => {
   if (page && page >= totalPage) {

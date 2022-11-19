@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.searchByKey = exports.findByIdAndDelete = exports.findByIdAndUpdate = exports.resourceCreate = exports.findById = exports.findOneByKey = exports.findAll = exports.countAll = void 0;
-const slug = require('slug');
+const slug = require("slug");
 const models_1 = require("../../models");
 /**Category count */
 const countAll = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -49,7 +49,14 @@ const resourceCreate = (data) => __awaiter(void 0, void 0, void 0, function* () 
 exports.resourceCreate = resourceCreate;
 /**findByIdAndUpdate resource  */
 const findByIdAndUpdate = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield models_1.Models.Category.findByIdAndUpdate(id, { $set: Object.assign({}, data) });
+    return yield models_1.Models.Category.findByIdAndUpdate(id, {
+        $set: {
+            name: data.name,
+            slug: slug(data.name),
+            icon: data.icon,
+            banner_image: data.banner_image,
+        },
+    });
 });
 exports.findByIdAndUpdate = findByIdAndUpdate;
 /**specific resource findByIdAndDelete  */

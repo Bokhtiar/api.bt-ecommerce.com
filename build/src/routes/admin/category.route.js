@@ -30,3 +30,6 @@ const categoryController = __importStar(require("../../controllers/admin/categor
 exports.categoryRouter = (0, express_1.Router)();
 exports.categoryRouter.get("/", categoryController.index);
 exports.categoryRouter.post("/", admin_1.validator.category.createUpdate, categoryController.store);
+exports.categoryRouter.get("/:id", categoryController.show);
+exports.categoryRouter.put("/:id", admin_1.validator.category.createUpdate, categoryController.update);
+exports.categoryRouter.delete("/:id", categoryController.destroy);

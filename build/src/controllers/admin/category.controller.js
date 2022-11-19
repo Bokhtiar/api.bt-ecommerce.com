@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.store = exports.index = void 0;
+exports.destroy = exports.update = exports.show = exports.store = exports.index = void 0;
 const admin_1 = require("../../services/admin");
 const pagination_helper_1 = require("../../helpers/pagination.helper");
 /* List of resources */
@@ -19,7 +19,7 @@ const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         const searchQuery = req.query.query;
         /* Search from query */
         // if (searchQuery) {
-        //   const results = await services.company.searchByKey(
+        //   const results = await service.Category.searchByKey(
         //     searchQuery.toString()
         //   );
         const totalItems = yield admin_1.service.Category.countAll();
@@ -70,3 +70,67 @@ const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.store = store;
+/**show */
+const show = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const result = yield admin_1.service.Category.findById(id);
+        res.status(200).json({
+            status: true,
+            data: result,
+        });
+    }
+    catch (error) {
+        if (error) {
+            console.log(error);
+            next(error);
+        }
+    }
+});
+exports.show = show;
+/**update */
+const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const { name, icon, banner_image } = req.body;
+        /* Check unique name */
+        const existWithName = yield admin_1.service.Category.findOneByKey({ name });
+        if (existWithName && existWithName._id.toString() !== id) {
+            res.status(409).json({
+                status: true,
+                message: "This name already exists.",
+            });
+        }
+        const documents = {
+            name,
+            icon,
+            banner_image,
+        };
+        yield admin_1.service.Category.findByIdAndUpdate(id, documents);
+        res.status(200).json({
+            status: true,
+            message: "Category updated.",
+        });
+    }
+    catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+exports.update = update;
+/**category destroy */
+const destroy = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        yield admin_1.service.Category.findByIdAndDelete(id);
+        res.status(200).json({
+            status: true,
+            message: "Category deleted.",
+        });
+    }
+    catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+exports.destroy = destroy;
