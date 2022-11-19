@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.destroy = exports.update = exports.show = exports.store = exports.index = void 0;
 const admin_1 = require("../../services/admin");
 const pagination_helper_1 = require("../../helpers/pagination.helper");
+const mongoose_1 = require("mongoose");
 /* List of resources */
 const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -74,7 +75,9 @@ exports.store = store;
 const show = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const result = yield admin_1.service.Category.findById(id);
+        const result = yield admin_1.service.Category.findById({
+            _id: new mongoose_1.Types.ObjectId(id),
+        });
         res.status(200).json({
             status: true,
             data: result,

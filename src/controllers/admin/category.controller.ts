@@ -1,6 +1,7 @@
 import { service } from "../../services/admin";
 import { Request, Response, NextFunction } from "express";
 import { paginate, paginateQueryParams } from "../../helpers/pagination.helper";
+import { Types } from "mongoose";
 
 /* List of resources */
 export const index = async (
@@ -76,7 +77,9 @@ export const store = async (
 export const show = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const result = await service.Category.findById(id);
+    const result = await service.Category.findById({
+      _id: new Types.ObjectId(id),
+    });
     res.status(200).json({
       status: true,
       data: result,
@@ -133,7 +136,7 @@ export const destroy = async (
   try {
     const { id } = req.params;
     await service.Category.findByIdAndDelete(id);
-    
+
     res.status(200).json({
       status: true,
       message: "Category deleted.",

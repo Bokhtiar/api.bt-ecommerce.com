@@ -1,5 +1,6 @@
 const slug = require("slug");
 import { Models } from "../../models";
+import { Types } from "mongoose";
 import {
   ICategory,
   ICategoryCreateOrUpdate,
@@ -31,8 +32,12 @@ export const findOneByKey = async (params: any): Promise<ICategory | null> => {
 };
 
 /**specific reosouce findById */
-export const findById = async (id: string): Promise<ICategory | null> => {
-  return await Models.Category.findById(id);
+export const findById = async ({
+  _id,
+}: {
+  _id: Types.ObjectId;
+}): Promise<ICategory | null> => {
+  return await Models.Category.findById(_id);
 };
 
 /**create resource */

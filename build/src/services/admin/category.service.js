@@ -32,8 +32,8 @@ const findOneByKey = (params) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.findOneByKey = findOneByKey;
 /**specific reosouce findById */
-const findById = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield models_1.Models.Category.findById(id);
+const findById = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield models_1.Models.Category.findById(_id);
 });
 exports.findById = findById;
 /**create resource */
