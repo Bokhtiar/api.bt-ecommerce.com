@@ -13,7 +13,7 @@ export interface IProduct {
   discrount?: number;
 }
 
-export interface IProductCreateOrUpdate {
+export interface IProductCreateUpdate {
   category: Types.ObjectId;
   name: string;
   sale_price: number;
