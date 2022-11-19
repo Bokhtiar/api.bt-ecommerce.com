@@ -50,7 +50,7 @@ const productSchema: Schema = new Schema<IProduct>(
       trim: true,
       default: false,
     },
-    discrount: {
+    discount: {
       type: Number,
       trim: true,
       default: false,

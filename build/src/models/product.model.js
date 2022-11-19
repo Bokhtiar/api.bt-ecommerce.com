@@ -45,7 +45,7 @@ const productSchema = new mongoose_1.Schema({
         trim: true,
         default: false,
     },
-    discrount: {
+    discount: {
         type: Number,
         trim: true,
         default: false,

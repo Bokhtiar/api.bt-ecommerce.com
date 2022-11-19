@@ -10,7 +10,7 @@ export interface IProduct {
   image: string;
   description?: string;
   quantity?: number;
-  discrount?: number;
+  discount?: number;
 }
 
 export interface IProductCreateUpdate {
@@ -21,5 +21,5 @@ export interface IProductCreateUpdate {
   image: string;
   description?: string;
   quantity?: number;
-  discrount?: number;
+  discount?: number;
 }

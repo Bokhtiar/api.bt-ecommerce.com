@@ -9,15 +9,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.adminProductService = void 0;
+exports.adminProductService = exports.searchByKey = void 0;
+const slug = require("slug");
 const product_model_1 = require("../../models/product.model");
 /* count all */
 const countAll = () => __awaiter(void 0, void 0, void 0, function* () {
     return yield product_model_1.Product.countDocuments();
 });
+/* specific reosurce  find one by key */
+const findOnebykey = (params) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield product_model_1.Product.findOne(Object.assign({}, params));
+});
 /* find One specific resource */
 const findOneById = ({ _id }) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield product_model_1.Product.findById(_id);
+    return yield product_model_1.Product.findById(_id).populate("category", "name");
 });
 /* find all reosurce by paginate */
 const findAll = ({ page, limit, }) => __awaiter(void 0, void 0, void 0, function* () {
@@ -32,12 +37,13 @@ const createResource = ({ data }) => __awaiter(void 0, void 0, void 0, function*
     const newResource = new product_model_1.Product({
         category: data.category,
         name: data.name,
+        slug: slug(data.name),
         sale_price: data.sale_price,
         regular_price: data.regular_price,
         image: data.image,
         description: data.description,
         quantity: data.quantity,
-        discount: data.discrount
+        discount: data.discount
     });
     return yield newResource.save();
 });
@@ -49,10 +55,22 @@ const findByIdAndUpdate = ({ _id, data }) => __awaiter(void 0, void 0, void 0, f
 const findByIdAndDelete = ({ _id }) => __awaiter(void 0, void 0, void 0, function* () {
     return yield product_model_1.Product.findByIdAndDelete(_id);
 });
+/* Search by key */
+const searchByKey = ({ query }) => __awaiter(void 0, void 0, void 0, function* () {
+    const queryRegExp = new RegExp(query, "i");
+    return yield product_model_1.Product.find({
+        $or: [{ name: queryRegExp }, { slug: queryRegExp }],
+    }, {
+        created_by: 0,
+    });
+});
+exports.searchByKey = searchByKey;
 exports.adminProductService = {
     findAll,
     countAll,
+    searchByKey: exports.searchByKey,
     findOneById,
+    findOnebykey,
     createResource,
     findByIdAndUpdate,
     findByIdAndDelete,
