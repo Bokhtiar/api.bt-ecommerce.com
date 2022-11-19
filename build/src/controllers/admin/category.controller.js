@@ -16,15 +16,17 @@ const mongoose_1 = require("mongoose");
 /* List of resources */
 const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        let results = [];
+        const totalItems = yield admin_1.service.Category.countAll();
         const { limit, page } = (0, pagination_helper_1.paginateQueryParams)(req.query);
         const searchQuery = req.query.query;
         /* Search from query */
-        // if (searchQuery) {
-        //   const results = await service.Category.searchByKey(
-        //     searchQuery.toString()
-        //   );
-        const totalItems = yield admin_1.service.Category.countAll();
-        const results = yield admin_1.service.Category.findAll({ page, limit });
+        if (searchQuery) {
+            results = yield admin_1.service.Category.searchByKey(searchQuery.toString());
+        }
+        else {
+            results = yield admin_1.service.Category.findAll({ page, limit });
+        }
         res.status(200).json({
             status: true,
             data: results,
@@ -39,11 +41,11 @@ const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.index = index;
-/**resource store */
+/* store resource  */
 const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, icon, banner_image } = req.body;
-        /**Check already exist name */
+        /* check already exist name */
         const isExistName = yield admin_1.service.Category.findOneByKey({ name: name });
         if (isExistName) {
             return res.status(409).json({
@@ -51,13 +53,14 @@ const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
                 message: "Category already created.",
             });
         }
-        /**store documents */
         const documents = {
             name,
             icon,
             banner_image,
         };
-        yield admin_1.service.Category.resourceCreate(documents);
+        yield admin_1.service.Category.resourceCreate({
+            data: Object.assign({}, documents)
+        });
         res.status(201).json({
             status: true,
             message: "Category Created.",
@@ -71,12 +74,12 @@ const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.store = store;
-/**show */
+/* show specific resource */
 const show = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const result = yield admin_1.service.Category.findById({
-            _id: new mongoose_1.Types.ObjectId(id),
+        const result = yield admin_1.service.Category.findOneById({
+            _id: new mongoose_1.Types.ObjectId(id)
         });
         res.status(200).json({
             status: true,
@@ -91,16 +94,16 @@ const show = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.show = show;
-/**update */
+/* update specific resource */
 const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
         const { name, icon, banner_image } = req.body;
-        /* Check unique name */
+        /* check unique name */
         const existWithName = yield admin_1.service.Category.findOneByKey({ name });
         if (existWithName && existWithName._id.toString() !== id) {
-            res.status(409).json({
-                status: true,
+            return res.status(409).json({
+                status: false,
                 message: "This name already exists.",
             });
         }
@@ -109,7 +112,10 @@ const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
             icon,
             banner_image,
         };
-        yield admin_1.service.Category.findByIdAndUpdate(id, documents);
+        yield admin_1.service.Category.findByIdAndUpdate({
+            _id: new mongoose_1.Types.ObjectId(id),
+            data: Object.assign({}, documents)
+        });
         res.status(200).json({
             status: true,
             message: "Category updated.",
@@ -121,11 +127,23 @@ const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.update = update;
-/**category destroy */
+/* destroy category */
 const destroy = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        yield admin_1.service.Category.findByIdAndDelete(id);
+        /* check avaialbe category */
+        const availableCategory = yield admin_1.service.Category.findOneById({
+            _id: new mongoose_1.Types.ObjectId(id)
+        });
+        if (!availableCategory) {
+            return res.status(404).json({
+                status: false,
+                message: "Category not found"
+            });
+        }
+        yield admin_1.service.Category.findByIdAndDelete({
+            _id: new mongoose_1.Types.ObjectId(id)
+        });
         res.status(200).json({
             status: true,
             message: "Category deleted.",

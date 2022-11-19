@@ -1,6 +1,6 @@
 const slug = require("slug");
-import { Models } from "../../models";
 import { Types } from "mongoose";
+import { Models } from "../../models";
 import {
   ICategory,
   ICategoryCreateOrUpdate,
@@ -31,8 +31,8 @@ export const findOneByKey = async (params: any): Promise<ICategory | null> => {
   return await Models.Category.findOne({ ...params });
 };
 
-/**specific reosouce findById */
-export const findById = async ({
+/**specific reosouce findOneById */
+export const findOneById = async ({
   _id,
 }: {
   _id: Types.ObjectId;
@@ -42,7 +42,7 @@ export const findById = async ({
 
 /**create resource */
 export const resourceCreate = async (
-  data: ICategoryCreateOrUpdate
+  {data}:{data: ICategoryCreateOrUpdate}
 ): Promise<ICategory | null> => {
   const newCategory = new Models.Category({
     name: data.name,
@@ -54,11 +54,15 @@ export const resourceCreate = async (
 };
 
 /**findByIdAndUpdate resource  */
-export const findByIdAndUpdate = async (
-  id: string,
+export const findByIdAndUpdate = async ({
+  _id,
+  data
+}:{
+  _id: Types.ObjectId,
   data: ICategoryCreateOrUpdate
+}
 ): Promise<ICategory | null> => {
-  return await Models.Category.findByIdAndUpdate(id, {
+  return await Models.Category.findByIdAndUpdate(_id, {
     $set: {
       name: data.name,
       slug: slug(data.name),
@@ -69,10 +73,12 @@ export const findByIdAndUpdate = async (
 };
 
 /**specific resource findByIdAndDelete  */
-export const findByIdAndDelete = async (
-  id: string
-): Promise<ICategory | null> => {
-  return await Models.Category.findByIdAndDelete(id);
+export const findByIdAndDelete = async ({
+  _id
+}:{
+  _id : Types.ObjectId
+}): Promise<ICategory | null> => {
+  return await Models.Category.findByIdAndDelete(_id);
 };
 
 /* Search by key */
@@ -80,12 +86,10 @@ export const searchByKey = async (query: string): Promise<ICategory[] | []> => {
   const queryRegExp = new RegExp(query, "i");
   return await Models.Category.find(
     {
-      $and: [{}, { $or: [{ name: queryRegExp }, { slug: queryRegExp }] }],
+       $or: [{ name: queryRegExp }, { slug: queryRegExp }],
     },
     {
       created_by: 0,
-      createdAt: 0,
-      updatedAt: 0,
     }
   );
 };

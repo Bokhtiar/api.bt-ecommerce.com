@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.searchByKey = exports.findByIdAndDelete = exports.findByIdAndUpdate = exports.resourceCreate = exports.findById = exports.findOneByKey = exports.findAll = exports.countAll = void 0;
+exports.searchByKey = exports.findByIdAndDelete = exports.findByIdAndUpdate = exports.resourceCreate = exports.findOneById = exports.findOneByKey = exports.findAll = exports.countAll = void 0;
 const slug = require("slug");
 const models_1 = require("../../models");
 /**Category count */
@@ -31,13 +31,13 @@ const findOneByKey = (params) => __awaiter(void 0, void 0, void 0, function* () 
     return yield models_1.Models.Category.findOne(Object.assign({}, params));
 });
 exports.findOneByKey = findOneByKey;
-/**specific reosouce findById */
-const findById = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
+/**specific reosouce findOneById */
+const findOneById = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
     return yield models_1.Models.Category.findById(_id);
 });
-exports.findById = findById;
+exports.findOneById = findOneById;
 /**create resource */
-const resourceCreate = (data) => __awaiter(void 0, void 0, void 0, function* () {
+const resourceCreate = ({ data }) => __awaiter(void 0, void 0, void 0, function* () {
     const newCategory = new models_1.Models.Category({
         name: data.name,
         slug: slug(data.name),
@@ -48,8 +48,8 @@ const resourceCreate = (data) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.resourceCreate = resourceCreate;
 /**findByIdAndUpdate resource  */
-const findByIdAndUpdate = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield models_1.Models.Category.findByIdAndUpdate(id, {
+const findByIdAndUpdate = ({ _id, data }) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield models_1.Models.Category.findByIdAndUpdate(_id, {
         $set: {
             name: data.name,
             slug: slug(data.name),
@@ -60,19 +60,17 @@ const findByIdAndUpdate = (id, data) => __awaiter(void 0, void 0, void 0, functi
 });
 exports.findByIdAndUpdate = findByIdAndUpdate;
 /**specific resource findByIdAndDelete  */
-const findByIdAndDelete = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield models_1.Models.Category.findByIdAndDelete(id);
+const findByIdAndDelete = ({ _id }) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield models_1.Models.Category.findByIdAndDelete(_id);
 });
 exports.findByIdAndDelete = findByIdAndDelete;
 /* Search by key */
 const searchByKey = (query) => __awaiter(void 0, void 0, void 0, function* () {
     const queryRegExp = new RegExp(query, "i");
     return yield models_1.Models.Category.find({
-        $and: [{}, { $or: [{ name: queryRegExp }, { slug: queryRegExp }] }],
+        $or: [{ name: queryRegExp }, { slug: queryRegExp }],
     }, {
         created_by: 0,
-        createdAt: 0,
-        updatedAt: 0,
     });
 });
 exports.searchByKey = searchByKey;
