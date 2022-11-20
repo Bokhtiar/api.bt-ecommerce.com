@@ -96,6 +96,7 @@ export const show = async (req: Request, res: Response, next: NextFunction) => {
     const result = await adminProductService.findOneById({
       _id: new Types.ObjectId(id),
     });
+
     res.status(200).json({
       status: true,
       data: result,

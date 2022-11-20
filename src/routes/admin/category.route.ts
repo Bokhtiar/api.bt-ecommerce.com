@@ -1,11 +1,12 @@
 import { Router } from "express";
+import { adminPermission } from "../../middleware/admin.permission.middleware";
 import { categoryCreateUpdateValidator } from "../../validators/admin/category.validators";
 
 import * as categoryController from "../../controllers/admin/category.controller";
 
 export const categoryRouter: Router = Router();
 
-categoryRouter.get("/", categoryController.index);
+categoryRouter.get("/", adminPermission, categoryController.index);
 
 categoryRouter.post(
   "/",

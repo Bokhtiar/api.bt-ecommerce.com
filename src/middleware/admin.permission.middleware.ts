@@ -20,27 +20,27 @@ export const adminPermission = async (
     const splitToken = await token.split(" ")[1];
     const decode = await jwt.verify(splitToken, process.env.JWT_SECRET);
 
-    if (decode.role == "admin") {
-      const user = {
-        id: decode.id,
-        name: decode.name,
-        role: decode.role,
-      };
-      //req.user = user
-      next();
-      return;
-    } else {
+    if (decode.role !== "admin") {
       return res.status(410).json({
         status: false,
         errors: { message: "You have no permission to access." },
       });
     }
+
+    const user = {
+      id: decode.id,
+      name: decode.name,
+      role: decode.role,
+    };
+    req.user = user;
+    next();
+    return;
   } catch (error: any) {
     if (error) {
-        return res.status(error.response.status).json({
-            status: error.response.data.status,
-            errors: [...error.response.data.errors],
-        })
+      return res.status(error.response.status).json({
+        status: error.response.data.status,
+        errors: [...error.response.data.errors],
+      });
     }
   }
 };

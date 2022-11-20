@@ -20,7 +20,7 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         /**Check avialable email */
         const account = yield auth_service_1.adminAuthService.findOneByKey({ email: email });
         if (!account) {
-            res.status(404).json({
+            return res.status(404).json({
                 status: false,
                 message: "Invalid email or password.",
             });
@@ -59,7 +59,7 @@ const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
         /**Check exist email */
         const is_emailExist = yield auth_service_1.adminAuthService.findOneByKey({ email: email });
         if (is_emailExist) {
-            res.status(409).json({
+            return res.status(409).json({
                 status: false,
                 message: "Email already exist.",
             });
@@ -67,7 +67,7 @@ const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
         /**Check exist phone */
         const is_phoneExist = yield auth_service_1.adminAuthService.findOneByKey({ phone: phone });
         if (is_phoneExist) {
-            res.status(409).json({
+            return res.status(409).json({
                 status: true,
                 message: "Phone already exist.",
             });

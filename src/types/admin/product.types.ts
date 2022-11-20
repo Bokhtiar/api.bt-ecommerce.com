@@ -1,8 +1,13 @@
 import { Types } from "mongoose";
 
+interface ICategory {
+  _id: Types.ObjectId;
+  name: string;
+}
+
 export interface IProduct {
   _id: Types.ObjectId;
-  category: Types.ObjectId;
+  category: ICategory | Types.ObjectId;
   name: string;
   slug: string;
   sale_price: number;
@@ -21,5 +26,5 @@ export interface IProductCreateUpdate {
   image: string;
   description?: string;
   quantity?: number;
-  discount?: number;
+  discount?: number | null;
 }

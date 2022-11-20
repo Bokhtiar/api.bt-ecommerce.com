@@ -16,7 +16,7 @@ export const login = async (
     /**Check avialable email */
     const account = await adminAuthService.findOneByKey({ email: email });
     if (!account) {
-      res.status(404).json({
+      return res.status(404).json({
         status: false,
         message: "Invalid email or password.",
       });
@@ -66,7 +66,7 @@ export const register = async (
     /**Check exist email */
     const is_emailExist = await adminAuthService.findOneByKey({ email: email });
     if (is_emailExist) {
-      res.status(409).json({
+      return res.status(409).json({
         status: false,
         message: "Email already exist.",
       });
@@ -75,7 +75,7 @@ export const register = async (
     /**Check exist phone */
     const is_phoneExist = await adminAuthService.findOneByKey({ phone: phone });
     if (is_phoneExist) {
-      res.status(409).json({
+      return res.status(409).json({
         status: true,
         message: "Phone already exist.",
       });
