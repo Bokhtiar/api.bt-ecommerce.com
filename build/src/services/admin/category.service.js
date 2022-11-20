@@ -37,7 +37,7 @@ const findOneById = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.findOneById = findOneById;
 /**create resource */
-const resourceCreate = ({ data }) => __awaiter(void 0, void 0, void 0, function* () {
+const resourceCreate = ({ data, }) => __awaiter(void 0, void 0, void 0, function* () {
     const newCategory = new models_1.Models.Category({
         name: data.name,
         slug: slug(data.name),
@@ -48,7 +48,7 @@ const resourceCreate = ({ data }) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.resourceCreate = resourceCreate;
 /**findByIdAndUpdate resource  */
-const findByIdAndUpdate = ({ _id, data }) => __awaiter(void 0, void 0, void 0, function* () {
+const findByIdAndUpdate = ({ _id, data, }) => __awaiter(void 0, void 0, void 0, function* () {
     return yield models_1.Models.Category.findByIdAndUpdate(_id, {
         $set: {
             name: data.name,
@@ -60,7 +60,7 @@ const findByIdAndUpdate = ({ _id, data }) => __awaiter(void 0, void 0, void 0, f
 });
 exports.findByIdAndUpdate = findByIdAndUpdate;
 /**specific resource findByIdAndDelete  */
-const findByIdAndDelete = ({ _id }) => __awaiter(void 0, void 0, void 0, function* () {
+const findByIdAndDelete = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
     return yield models_1.Models.Category.findByIdAndDelete(_id);
 });
 exports.findByIdAndDelete = findByIdAndDelete;

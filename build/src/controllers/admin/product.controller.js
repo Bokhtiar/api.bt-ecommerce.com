@@ -23,7 +23,7 @@ const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         /* Search from query */
         if (searchQuery) {
             results = yield product_service_1.adminProductService.searchByKey({
-                query: searchQuery.toString()
+                query: searchQuery.toString(),
             });
         }
         else {
@@ -46,13 +46,13 @@ exports.index = index;
 /* store new resoruce */
 const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { category, name, sale_price, regular_price, image, description, quantity, discount } = req.body;
+        const { category, name, sale_price, regular_price, image, description, quantity, discount, } = req.body;
         /* check exist name*/
         const nameExist = yield product_service_1.adminProductService.findOnebykey({ name });
         if (nameExist) {
             return res.status(409).json({
                 status: true,
-                message: "Product name already exist"
+                message: "Product name already exist",
             });
         }
         const documents = {
@@ -63,12 +63,12 @@ const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
             image,
             description,
             quantity,
-            discount
+            discount,
         };
         yield product_service_1.adminProductService.createResource({ data: Object.assign({}, documents) });
         res.status(201).json({
             status: true,
-            message: "Product created."
+            message: "Product created.",
         });
     }
     catch (error) {
@@ -82,11 +82,11 @@ const show = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const { id } = req.params;
         const result = yield product_service_1.adminProductService.findOneById({
-            _id: new mongoose_1.Types.ObjectId(id)
+            _id: new mongoose_1.Types.ObjectId(id),
         });
         res.status(200).json({
             status: true,
-            data: result
+            data: result,
         });
     }
     catch (error) {
@@ -101,7 +101,7 @@ exports.show = show;
 const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const { category, name, sale_price, regular_price, image, description, quantity, discount } = req.body;
+        const { category, name, sale_price, regular_price, image, description, quantity, discount, } = req.body;
         /* check unique name */
         const existWithName = yield product_service_1.adminProductService.findOnebykey({ name });
         if (existWithName && existWithName._id.toString() !== id) {
@@ -118,15 +118,15 @@ const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
             image,
             description,
             quantity,
-            discount
+            discount,
         };
         yield product_service_1.adminProductService.findByIdAndUpdate({
             _id: new mongoose_1.Types.ObjectId(id),
-            data: Object.assign({}, documents)
+            data: Object.assign({}, documents),
         });
         res.status(200).json({
             status: true,
-            message: "Product Updated."
+            message: "Product Updated.",
         });
     }
     catch (error) {
@@ -139,7 +139,9 @@ exports.update = update;
 const destory = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        yield product_service_1.adminProductService.findByIdAndDelete({ _id: new mongoose_1.Types.ObjectId(id) });
+        yield product_service_1.adminProductService.findByIdAndDelete({
+            _id: new mongoose_1.Types.ObjectId(id),
+        });
         res.status(200).json({
             status: true,
             message: "Product Deleted.",

@@ -41,9 +41,11 @@ export const findOneById = async ({
 };
 
 /**create resource */
-export const resourceCreate = async (
-  {data}:{data: ICategoryCreateOrUpdate}
-): Promise<ICategory | null> => {
+export const resourceCreate = async ({
+  data,
+}: {
+  data: ICategoryCreateOrUpdate;
+}): Promise<ICategory | null> => {
   const newCategory = new Models.Category({
     name: data.name,
     slug: slug(data.name),
@@ -56,12 +58,11 @@ export const resourceCreate = async (
 /**findByIdAndUpdate resource  */
 export const findByIdAndUpdate = async ({
   _id,
-  data
-}:{
-  _id: Types.ObjectId,
-  data: ICategoryCreateOrUpdate
-}
-): Promise<ICategory | null> => {
+  data,
+}: {
+  _id: Types.ObjectId;
+  data: ICategoryCreateOrUpdate;
+}): Promise<ICategory | null> => {
   return await Models.Category.findByIdAndUpdate(_id, {
     $set: {
       name: data.name,
@@ -74,9 +75,9 @@ export const findByIdAndUpdate = async ({
 
 /**specific resource findByIdAndDelete  */
 export const findByIdAndDelete = async ({
-  _id
-}:{
-  _id : Types.ObjectId
+  _id,
+}: {
+  _id: Types.ObjectId;
 }): Promise<ICategory | null> => {
   return await Models.Category.findByIdAndDelete(_id);
 };
@@ -86,7 +87,7 @@ export const searchByKey = async (query: string): Promise<ICategory[] | []> => {
   const queryRegExp = new RegExp(query, "i");
   return await Models.Category.find(
     {
-       $or: [{ name: queryRegExp }, { slug: queryRegExp }],
+      $or: [{ name: queryRegExp }, { slug: queryRegExp }],
     },
     {
       created_by: 0,

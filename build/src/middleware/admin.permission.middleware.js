@@ -9,17 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isAdmin = void 0;
+exports.adminPermission = void 0;
 const jwt = require("jsonwebtoken");
-/* Admin validator */
-const isAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+/* admin permission handle */
+const adminPermission = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const token = yield req.headers.authorization;
-        if (!token)
+        if (!token) {
             return res.status(404).json({
                 status: false,
-                errors: { message: "Token not found" },
+                message: "Authorization token not found.",
             });
+        }
         // decode token
         const splitToken = yield token.split(" ")[1];
         const decode = yield jwt.verify(splitToken, process.env.JWT_SECRET);
@@ -29,8 +30,9 @@ const isAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
                 name: decode.name,
                 role: decode.role,
             };
-            req.user = user;
+            //req.user = user
             next();
+            return;
         }
         else {
             return res.status(410).json({
@@ -41,17 +43,11 @@ const isAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
     }
     catch (error) {
         if (error) {
-            if (error.name === "TokenExpiredError") {
-                return res.status(410).json({
-                    status: false,
-                    errors: { message: "Token expired" },
-                });
-            }
-            return res.status(501).json({
-                status: false,
-                errors: { message: "Unauthorized request" },
+            return res.status(error.response.status).json({
+                status: error.response.data.status,
+                errors: [...error.response.data.errors],
             });
         }
     }
 });
-exports.isAdmin = isAdmin;
+exports.adminPermission = adminPermission;
