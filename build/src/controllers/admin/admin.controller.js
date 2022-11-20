@@ -13,11 +13,11 @@ exports.register = exports.login = void 0;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const admin_service_1 = require("../../services/admin/admin.service");
-/**login as a admin */
+/* login as a admin */
 const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password } = req.body;
-        /**Check avialable email */
+        /* check account is exists  */
         const account = yield admin_service_1.adminAuthService.findOneByKey({ email: email });
         if (!account) {
             return res.status(404).json({
@@ -25,7 +25,7 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
                 message: "Invalid email or password.",
             });
         }
-        /* Compare with password */
+        /* compare with password */
         const result = yield bcrypt.compare(password, account === null || account === void 0 ? void 0 : account.password);
         if (!result) {
             return res.status(404).json({
@@ -52,11 +52,11 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.login = login;
-/**register as a admin */
+/* register as a admin */
 const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, email, phone, password, role } = req.body;
-        /**Check exist email */
+        /* check exist email */
         const is_emailExist = yield admin_service_1.adminAuthService.findOneByKey({ email: email });
         if (is_emailExist) {
             return res.status(409).json({
@@ -64,7 +64,7 @@ const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
                 message: "Email already exist.",
             });
         }
-        /**Check exist phone */
+        /* check exist phone */
         const is_phoneExist = yield admin_service_1.adminAuthService.findOneByKey({ phone: phone });
         if (is_phoneExist) {
             return res.status(409).json({
@@ -72,7 +72,7 @@ const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
                 message: "Phone already exist.",
             });
         }
-        /**Has password  */
+        /* Has password  */
         const hashPassword = yield bcrypt.hash(password, 10);
         const documents = {
             name,
@@ -81,7 +81,7 @@ const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
             password: hashPassword,
             role,
         };
-        yield admin_service_1.adminAuthService.Registration({ data: Object.assign({}, documents) });
+        yield admin_service_1.adminAuthService.registration({ documents: Object.assign({}, documents) });
         res.status(201).json({
             status: true,
             message: "Admin Created.",

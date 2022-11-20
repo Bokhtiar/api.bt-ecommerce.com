@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppRouter = void 0;
 const express_1 = require("express");
-const auth_route_1 = require("./admin/auth.route");
+const admin_route_1 = require("./admin/admin.route");
 const product_route_1 = require("./admin/product.route");
 const category_route_1 = require("./admin/category.route");
 const subCategory_route_1 = require("./admin/subCategory.route");
 exports.AppRouter = (0, express_1.Router)();
-exports.AppRouter.use("/auth", auth_route_1.AuthRouter);
+exports.AppRouter.use("/admin/auth/", admin_route_1.AdminRouter);
 exports.AppRouter.use("/category", category_route_1.categoryRouter);
 exports.AppRouter.use("/sub-category", subCategory_route_1.subCategoryRoute);
 exports.AppRouter.use("/Product", product_route_1.productRouter);

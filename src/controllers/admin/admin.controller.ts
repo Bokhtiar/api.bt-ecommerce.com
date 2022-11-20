@@ -1,10 +1,10 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-import { adminAuthService } from "../../services/admin/auth.service";
+import { adminAuthService } from "../../services/admin/admin.service";
 import { Request, Response, NextFunction } from "express";
-import { IAuthCreateOrUpdate } from "src/types/admin/auth.types";
+import { IAdmin, IAdminCreateOrUpdate } from "src/types/admin/admin.types";
 
-/**login as a admin */
+/* login as a admin */
 export const login = async (
   req: Request,
   res: Response,
@@ -13,7 +13,7 @@ export const login = async (
   try {
     const { email, password } = req.body;
 
-    /**Check avialable email */
+    /* check account is exists  */
     const account = await adminAuthService.findOneByKey({ email: email });
     if (!account) {
       return res.status(404).json({
@@ -22,7 +22,7 @@ export const login = async (
       });
     }
 
-    /* Compare with password */
+    /* compare with password */
     const result = await bcrypt.compare(password, account?.password);
     if (!result) {
       return res.status(404).json({
@@ -54,7 +54,7 @@ export const login = async (
   }
 };
 
-/**register as a admin */
+/* register as a admin */
 export const register = async (
   req: Request,
   res: Response,
@@ -63,7 +63,7 @@ export const register = async (
   try {
     const { name, email, phone, password, role } = req.body;
 
-    /**Check exist email */
+    /* check exist email */
     const is_emailExist = await adminAuthService.findOneByKey({ email: email });
     if (is_emailExist) {
       return res.status(409).json({
@@ -72,7 +72,7 @@ export const register = async (
       });
     }
 
-    /**Check exist phone */
+    /* check exist phone */
     const is_phoneExist = await adminAuthService.findOneByKey({ phone: phone });
     if (is_phoneExist) {
       return res.status(409).json({
@@ -81,10 +81,10 @@ export const register = async (
       });
     }
 
-    /**Has password  */
+    /* Has password  */
     const hashPassword = await bcrypt.hash(password, 10);
 
-    const documents: IAuthCreateOrUpdate = {
+    const documents: IAdminCreateOrUpdate = {
       name,
       email,
       phone,
@@ -92,7 +92,7 @@ export const register = async (
       role,
     };
 
-    await adminAuthService.Registration({data: {...documents}});
+    await adminAuthService.registration({documents: {...documents}});
 
     res.status(201).json({
       status: true,

@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { IAuth } from "../types/admin/auth.types";
+import { IAuth } from "../types/admin/admin.types";
 
 /**Admin database field */
 const adminSchema: Schema = new Schema<IAuth>(

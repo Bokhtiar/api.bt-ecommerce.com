@@ -23,10 +23,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthRouter = void 0;
+exports.AdminRouter = void 0;
 const express_1 = require("express");
 const login_validators_1 = require("../../validators/admin/login.validators");
 const AuthController = __importStar(require("../../controllers/admin/admin.controller"));
-exports.AuthRouter = (0, express_1.Router)();
-exports.AuthRouter.post("/login", login_validators_1.loginValidators, AuthController.login);
-exports.AuthRouter.post("/register", login_validators_1.loginValidators, AuthController.register);
+exports.AdminRouter = (0, express_1.Router)();
+exports.AdminRouter.post("/login", login_validators_1.loginValidators, AuthController.login);
+exports.AdminRouter.post("/register", login_validators_1.loginValidators, AuthController.register);
