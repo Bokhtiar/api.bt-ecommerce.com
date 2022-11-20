@@ -46,7 +46,7 @@ exports.index = index;
 /* store new resoruce */
 const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { category, name, sale_price, regular_price, image, description, quantity, discount, } = req.body;
+        const { category, subCategory, name, sale_price, regular_price, image, description, quantity, discount, } = req.body;
         /* check exist name*/
         const nameExist = yield product_service_1.adminProductService.findOnebykey({ name });
         if (nameExist) {
@@ -56,7 +56,8 @@ const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
             });
         }
         const documents = {
-            category,
+            category: new mongoose_1.Types.ObjectId(category),
+            subCategory: new mongoose_1.Types.ObjectId(subCategory),
             name,
             sale_price,
             regular_price,
@@ -65,7 +66,7 @@ const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
             quantity,
             discount,
         };
-        yield product_service_1.adminProductService.createResource({ data: Object.assign({}, documents) });
+        yield product_service_1.adminProductService.createProduct({ documents: Object.assign({}, documents) });
         res.status(201).json({
             status: true,
             message: "Product created.",
@@ -101,7 +102,7 @@ exports.show = show;
 const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const { category, name, sale_price, regular_price, image, description, quantity, discount, } = req.body;
+        const { category, subCategory, name, sale_price, regular_price, image, description, quantity, discount, } = req.body;
         /* check unique name */
         const existWithName = yield product_service_1.adminProductService.findOnebykey({ name });
         if (existWithName && existWithName._id.toString() !== id) {
@@ -112,6 +113,7 @@ const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
         }
         const documents = {
             category,
+            subCategory,
             name,
             sale_price,
             regular_price,
@@ -122,7 +124,7 @@ const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
         };
         yield product_service_1.adminProductService.findByIdAndUpdate({
             _id: new mongoose_1.Types.ObjectId(id),
-            data: Object.assign({}, documents),
+            documents: Object.assign({}, documents),
         });
         res.status(200).json({
             status: true,

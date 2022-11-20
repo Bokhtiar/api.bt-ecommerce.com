@@ -18,11 +18,12 @@ const countAll = () => __awaiter(void 0, void 0, void 0, function* () {
 });
 /* specific reosurce  find one by key */
 const findOnebykey = (params) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield product_model_1.Product.findOne(Object.assign({}, params));
+    return yield product_model_1.Product.findOne(Object.assign({}, params)).populate("category", "name").populate("subCategory", "name");
+    ;
 });
 /* find One specific resource */
 const findOneById = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield product_model_1.Product.findById(_id).populate("category", "name");
+    return yield product_model_1.Product.findById(_id).populate("category", "name").populate("subCategory", "name");
 });
 /* find all reosurce by paginate */
 const findAll = ({ page, limit, }) => __awaiter(void 0, void 0, void 0, function* () {
@@ -33,23 +34,24 @@ const findAll = ({ page, limit, }) => __awaiter(void 0, void 0, void 0, function
         .exec();
 });
 /* create new resrouce */
-const createResource = ({ data, }) => __awaiter(void 0, void 0, void 0, function* () {
+const createProduct = ({ documents, }) => __awaiter(void 0, void 0, void 0, function* () {
     const newResource = new product_model_1.Product({
-        category: data.category,
-        name: data.name,
-        slug: slug(data.name),
-        sale_price: data.sale_price,
-        regular_price: data.regular_price,
-        image: data.image,
-        description: data.description,
-        quantity: data.quantity,
-        discount: data.discount,
+        category: documents.category,
+        subCategory: documents.subCategory,
+        name: documents.name,
+        slug: slug(documents.name),
+        sale_price: documents.sale_price,
+        regular_price: documents.regular_price,
+        image: documents.image,
+        description: documents.description,
+        quantity: documents.quantity,
+        discount: documents.discount,
     });
     return yield newResource.save();
 });
 /* find specific resource by id and updated keys */
-const findByIdAndUpdate = ({ _id, data, }) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield product_model_1.Product.findByIdAndUpdate(_id, { $set: Object.assign({}, data) });
+const findByIdAndUpdate = ({ _id, documents, }) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield product_model_1.Product.findByIdAndUpdate(_id, { $set: Object.assign({}, documents) });
 });
 /* find sepecific reosurce by id and delete */
 const findByIdAndDelete = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
@@ -71,7 +73,7 @@ exports.adminProductService = {
     searchByKey: exports.searchByKey,
     findOneById,
     findOnebykey,
-    createResource,
+    createProduct,
     findByIdAndUpdate,
     findByIdAndDelete,
 };

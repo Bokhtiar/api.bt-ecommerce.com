@@ -10,6 +10,12 @@ const productSchema = new mongoose_1.Schema({
         ref: "Category",
         required: true,
     },
+    subCategory: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        trim: true,
+        ref: "SubCategory",
+        required: true,
+    },
     name: {
         type: String,
         trim: true,

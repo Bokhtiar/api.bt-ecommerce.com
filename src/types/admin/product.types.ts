@@ -5,9 +5,15 @@ interface ICategory {
   name: string;
 }
 
+interface ISubCategory {
+  _id: Types.ObjectId;
+  name: string;
+}
+
 export interface IProduct {
   _id: Types.ObjectId;
   category: ICategory | Types.ObjectId;
+  subCategory: ISubCategory | Types.ObjectId;
   name: string;
   slug: string;
   sale_price: number;
@@ -20,6 +26,7 @@ export interface IProduct {
 
 export interface IProductCreateUpdate {
   category: Types.ObjectId;
+  subCategory: Types.ObjectId
   name: string;
   sale_price: number;
   regular_price: number;

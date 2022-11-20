@@ -7,7 +7,14 @@ const productSchema: Schema = new Schema<IProduct>(
     category: {
       type: Schema.Types.ObjectId,
       trim: true,
-      ref: "Category",
+      ref: "Category", 
+      required: true,
+    },
+
+    subCategory: {
+      type: Schema.Types.ObjectId,
+      trim: true,
+      ref: "SubCategory",
       required: true,
     },
 

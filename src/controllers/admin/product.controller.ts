@@ -50,6 +50,7 @@ export const store = async (
   try {
     const {
       category,
+      subCategory,
       name,
       sale_price,
       regular_price,
@@ -58,6 +59,7 @@ export const store = async (
       quantity,
       discount,
     } = req.body;
+
     /* check exist name*/
     const nameExist = await adminProductService.findOnebykey({ name });
     if (nameExist) {
@@ -68,7 +70,8 @@ export const store = async (
     }
 
     const documents: IProductCreateUpdate = {
-      category,
+      category :  new Types.ObjectId(category),
+      subCategory: new Types.ObjectId(subCategory),
       name,
       sale_price,
       regular_price,
@@ -78,7 +81,7 @@ export const store = async (
       discount,
     };
 
-    await adminProductService.createResource({ data: { ...documents } });
+    await adminProductService.createProduct({ documents: { ...documents } });
     res.status(201).json({
       status: true,
       message: "Product created.",
@@ -119,6 +122,7 @@ export const update = async (
     const { id } = req.params;
     const {
       category,
+      subCategory,
       name,
       sale_price,
       regular_price,
@@ -139,6 +143,7 @@ export const update = async (
 
     const documents: IProductCreateUpdate = {
       category,
+      subCategory,
       name,
       sale_price,
       regular_price,
@@ -150,7 +155,7 @@ export const update = async (
 
     await adminProductService.findByIdAndUpdate({
       _id: new Types.ObjectId(id),
-      data: { ...documents },
+      documents: { ...documents },
     });
 
     res.status(200).json({

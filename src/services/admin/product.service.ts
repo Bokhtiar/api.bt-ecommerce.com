@@ -13,7 +13,7 @@ const countAll = async (): Promise<number> => {
 
 /* specific reosurce  find one by key */
 const findOnebykey = async (params: any): Promise<IProduct | null> => {
-  return await Product.findOne({ ...params });
+  return await Product.findOne({ ...params }).populate("category", "name").populate("subCategory", "name");;
 };
 
 /* find One specific resource */
@@ -22,7 +22,7 @@ const findOneById = async ({
 }: {
   _id: Types.ObjectId;
 }): Promise<IProduct | null> => {
-  return await Product.findById(_id).populate("category", "name");
+  return await Product.findById(_id).populate("category", "name").populate("subCategory", "name");
 };
 
 /* find all reosurce by paginate */
@@ -41,21 +41,22 @@ const findAll = async ({
 };
 
 /* create new resrouce */
-const createResource = async ({
-  data,
+const createProduct = async ({
+  documents,
 }: {
-  data: IProductCreateUpdate;
+  documents: IProductCreateUpdate;
 }): Promise<IProduct | null> => {
   const newResource = new Product({
-    category: data.category,
-    name: data.name,
-    slug: slug(data.name),
-    sale_price: data.sale_price,
-    regular_price: data.regular_price,
-    image: data.image,
-    description: data.description,
-    quantity: data.quantity,
-    discount: data.discount,
+    category: documents.category,
+    subCategory: documents.subCategory,
+    name: documents.name,
+    slug: slug(documents.name),
+    sale_price: documents.sale_price,
+    regular_price: documents.regular_price,
+    image: documents.image,
+    description: documents.description,
+    quantity: documents.quantity,
+    discount: documents.discount,
   });
 
   return await newResource.save();
@@ -64,12 +65,12 @@ const createResource = async ({
 /* find specific resource by id and updated keys */
 const findByIdAndUpdate = async ({
   _id,
-  data,
+  documents,
 }: {
   _id: Types.ObjectId;
-  data: IProductCreateUpdate;
+  documents: IProductCreateUpdate;
 }): Promise<IProduct | null> => {
-  return await Product.findByIdAndUpdate(_id, { $set: { ...data } });
+  return await Product.findByIdAndUpdate(_id, { $set: { ...documents } });
 };
 
 /* find sepecific reosurce by id and delete */
@@ -104,7 +105,7 @@ export const adminProductService = {
   searchByKey,
   findOneById,
   findOnebykey,
-  createResource,
+  createProduct,
   findByIdAndUpdate,
   findByIdAndDelete,
 };
