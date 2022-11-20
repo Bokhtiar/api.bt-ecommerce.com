@@ -1,7 +1,6 @@
 import { Schema, model } from "mongoose";
 import { IProduct } from "../types/admin/product.types";
 
-/**product table field decleard */
 const productSchema: Schema = new Schema<IProduct>(
   {
     category: {
@@ -68,5 +67,4 @@ const productSchema: Schema = new Schema<IProduct>(
   }
 );
 
-/**Databae name deaclear */
 export const Product = model<IProduct>("Product", productSchema);

@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
-import { IAdmin } from "../types/admin/admin.types";
+import { IUser } from '../types/user/user.types'
 
-const adminSchema: Schema = new Schema<IAdmin>(
+const userSchema: Schema = new Schema<IUser>(
   {
     name: {
       type: String,
@@ -34,4 +34,4 @@ const adminSchema: Schema = new Schema<IAdmin>(
   }
 );
 
-export const Admin = model<IAdmin>("Admin", adminSchema);
+export const User = model<IUser>("User", userSchema);
