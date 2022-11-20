@@ -12,11 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUpdate = void 0;
+exports.productCreateUpdateValidator = void 0;
 const async_validator_1 = __importDefault(require("async-validator"));
 const validMongooseID_helper_1 = require("../../helpers/validMongooseID.helper");
 /* Resource create & update validaor */
-const createUpdate = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const productCreateUpdateValidator = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const descriptor = {
         category: [
             {
@@ -70,4 +70,4 @@ const createUpdate = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
         next();
     });
 });
-exports.createUpdate = createUpdate;
+exports.productCreateUpdateValidator = productCreateUpdateValidator;

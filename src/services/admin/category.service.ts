@@ -1,6 +1,6 @@
 const slug = require("slug");
 import { Types } from "mongoose";
-import { Models } from "../../models";
+import { Category } from "../../models/category.model";
 import {
   ICategory,
   ICategoryCreateOrUpdate,
@@ -8,7 +8,7 @@ import {
 
 /* count all */
 const countAll = async (): Promise<number> => {
-  return Models.Category.countDocuments();
+  return Category.countDocuments();
 };
 
 /* find resources by paginate */
@@ -19,7 +19,7 @@ const findAll = async ({
   page: number;
   limit: number;
 }): Promise<ICategory[] | []> => {
-  return await Models.Category.find()
+  return await Category.find()
     .sort({ _id: -1 })
     .skip(page * limit - limit)
     .limit(limit)
@@ -28,7 +28,7 @@ const findAll = async ({
 
 /**specific resource findOneByKey */
 const findOneByKey = async (params: any): Promise<ICategory | null> => {
-  return await Models.Category.findOne({ ...params });
+  return await Category.findOne({ ...params });
 };
 
 /**specific reosouce findOneById */
@@ -37,7 +37,7 @@ const findOneById = async ({
 }: {
   _id: Types.ObjectId;
 }): Promise<ICategory | null> => {
-  return await Models.Category.findById(_id);
+  return await Category.findById(_id);
 };
 
 /**create resource */
@@ -46,7 +46,7 @@ const resourceCreate = async ({
 }: {
   data: ICategoryCreateOrUpdate;
 }): Promise<ICategory | null> => {
-  const newCategory = new Models.Category({
+  const newCategory = new Category({
     name: data.name,
     slug: slug(data.name),
     icon: data.icon,
@@ -63,7 +63,7 @@ const findByIdAndUpdate = async ({
   _id: Types.ObjectId;
   data: ICategoryCreateOrUpdate;
 }): Promise<ICategory | null> => {
-  return await Models.Category.findByIdAndUpdate(_id, {
+  return await Category.findByIdAndUpdate(_id, {
     $set: {
       name: data.name,
       slug: slug(data.name),
@@ -79,13 +79,13 @@ const findByIdAndDelete = async ({
 }: {
   _id: Types.ObjectId;
 }): Promise<ICategory | null> => {
-  return await Models.Category.findByIdAndDelete(_id);
+  return await Category.findByIdAndDelete(_id);
 };
 
 /* Search by key */
 const searchByKey = async (query: string): Promise<ICategory[] | []> => {
   const queryRegExp = new RegExp(query, "i");
-  return await Models.Category.find(
+  return await Category.find(
     {
       $or: [{ name: queryRegExp }, { slug: queryRegExp }],
     },
@@ -104,4 +104,4 @@ export const adminCategoryService = {
   resourceCreate,
   findByIdAndUpdate,
   findByIdAndDelete,
-}
+};

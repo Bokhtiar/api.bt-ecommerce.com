@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { validator } from "../../validators/admin";
+import { categoryCreateUpdateValidator } from "../../validators/admin/category.validators";
 
 import * as categoryController from "../../controllers/admin/category.controller";
 
@@ -9,7 +9,7 @@ categoryRouter.get("/", categoryController.index);
 
 categoryRouter.post(
   "/",
-  validator.category.createUpdate,
+  categoryCreateUpdateValidator,
   categoryController.store
 );
 
@@ -17,8 +17,8 @@ categoryRouter.get("/:id", categoryController.show);
 
 categoryRouter.put(
   "/:id",
-  validator.category.createUpdate,
+  categoryCreateUpdateValidator,
   categoryController.update
 );
 
-categoryRouter.delete("/:id", categoryController.destroy)
+categoryRouter.delete("/:id", categoryController.destroy);

@@ -2,7 +2,7 @@ import Schema from "async-validator";
 import { NextFunction, Request, Response } from "express";
 
 /* Resource create & update validaor */
-export const createUpdate = async (
+export const categoryCreateUpdateValidator = async (
   req: Request,
   res: Response,
   next: NextFunction

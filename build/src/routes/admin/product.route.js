@@ -29,7 +29,7 @@ const product_validators_1 = require("../../validators/admin/product.validators"
 const productController = __importStar(require("../../controllers/admin/product.controller"));
 exports.productRouter = (0, express_1.Router)();
 exports.productRouter.get("/", productController.index);
-exports.productRouter.post("/", product_validators_1.createUpdate, productController.store);
+exports.productRouter.post("/", product_validators_1.productCreateUpdateValidator, productController.store);
 exports.productRouter.get("/:id", productController.show);
-exports.productRouter.put("/:id", product_validators_1.createUpdate, productController.update);
+exports.productRouter.put("/:id", product_validators_1.productCreateUpdateValidator, productController.update);
 exports.productRouter.delete("/:id", productController.destory);

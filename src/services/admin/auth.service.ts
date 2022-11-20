@@ -1,16 +1,18 @@
 import { IAuth, IAuthCreateOrUpdate } from "../../types/admin/auth.types";
-import { Models } from "../../models";
+import { Admin } from "../../models/admin.model";
 
 /**specific resource findByKey */
-export const findOneByKey = async (params: any): Promise<IAuth | null> => {
-  return await Models.Admin.findOne({ ...params });
+const findOneByKey = async (params: any): Promise<IAuth | null> => {
+  return await Admin.findOne({ ...params });
 };
 
 /**resource store */
-export const Registration = async (
-  data: IAuthCreateOrUpdate
-): Promise<IAuth | null> => {
-  const newAdmin = new Models.Admin({
+const Registration = async ({
+  data,
+}: {
+  data: IAuthCreateOrUpdate;
+}): Promise<IAuth | null> => {
+  const newAdmin = new Admin({
     name: data.name,
     email: data.email,
     phone: data.phone,
@@ -18,4 +20,9 @@ export const Registration = async (
     role: data.role,
   });
   return await newAdmin.save();
+};
+
+export const adminAuthService = {
+  findOneByKey,
+  Registration,
 };

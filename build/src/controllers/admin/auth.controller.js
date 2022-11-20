@@ -12,13 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.register = exports.login = void 0;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const admin_1 = require("../../services/admin");
+const auth_service_1 = require("../../services/admin/auth.service");
 /**login as a admin */
 const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password } = req.body;
         /**Check avialable email */
-        const account = yield admin_1.service.Auth.findOneByKey({ email: email });
+        const account = yield auth_service_1.adminAuthService.findOneByKey({ email: email });
         if (!account) {
             res.status(404).json({
                 status: false,
@@ -57,7 +57,7 @@ const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
     try {
         const { name, email, phone, password, role } = req.body;
         /**Check exist email */
-        const is_emailExist = yield admin_1.service.Auth.findOneByKey({ email: email });
+        const is_emailExist = yield auth_service_1.adminAuthService.findOneByKey({ email: email });
         if (is_emailExist) {
             res.status(409).json({
                 status: false,
@@ -65,7 +65,7 @@ const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
             });
         }
         /**Check exist phone */
-        const is_phoneExist = yield admin_1.service.Auth.findOneByKey({ phone: phone });
+        const is_phoneExist = yield auth_service_1.adminAuthService.findOneByKey({ phone: phone });
         if (is_phoneExist) {
             res.status(409).json({
                 status: true,
@@ -81,7 +81,7 @@ const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
             password: hashPassword,
             role,
         };
-        yield admin_1.service.Auth.Registration(documents);
+        yield auth_service_1.adminAuthService.Registration({ data: Object.assign({}, documents) });
         res.status(201).json({
             status: true,
             message: "Admin Created.",

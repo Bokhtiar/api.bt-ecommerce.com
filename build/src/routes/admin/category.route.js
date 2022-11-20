@@ -25,11 +25,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.categoryRouter = void 0;
 const express_1 = require("express");
-const admin_1 = require("../../validators/admin");
+const category_validators_1 = require("../../validators/admin/category.validators");
 const categoryController = __importStar(require("../../controllers/admin/category.controller"));
 exports.categoryRouter = (0, express_1.Router)();
 exports.categoryRouter.get("/", categoryController.index);
-exports.categoryRouter.post("/", admin_1.validator.category.createUpdate, categoryController.store);
+exports.categoryRouter.post("/", category_validators_1.categoryCreateUpdateValidator, categoryController.store);
 exports.categoryRouter.get("/:id", categoryController.show);
-exports.categoryRouter.put("/:id", admin_1.validator.category.createUpdate, categoryController.update);
+exports.categoryRouter.put("/:id", category_validators_1.categoryCreateUpdateValidator, categoryController.update);
 exports.categoryRouter.delete("/:id", categoryController.destroy);

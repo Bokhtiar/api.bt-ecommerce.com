@@ -12,10 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUpdate = void 0;
+exports.categoryCreateUpdateValidator = void 0;
 const async_validator_1 = __importDefault(require("async-validator"));
 /* Resource create & update validaor */
-const createUpdate = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const categoryCreateUpdateValidator = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const descriptor = {
         name: {
             type: "string",
@@ -35,4 +35,4 @@ const createUpdate = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
         next();
     });
 });
-exports.createUpdate = createUpdate;
+exports.categoryCreateUpdateValidator = categoryCreateUpdateValidator;

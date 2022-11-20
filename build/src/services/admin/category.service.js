@@ -11,14 +11,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.adminCategoryService = void 0;
 const slug = require("slug");
-const models_1 = require("../../models");
+const category_model_1 = require("../../models/category.model");
 /* count all */
 const countAll = () => __awaiter(void 0, void 0, void 0, function* () {
-    return models_1.Models.Category.countDocuments();
+    return category_model_1.Category.countDocuments();
 });
 /* find resources by paginate */
 const findAll = ({ page, limit, }) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield models_1.Models.Category.find()
+    return yield category_model_1.Category.find()
         .sort({ _id: -1 })
         .skip(page * limit - limit)
         .limit(limit)
@@ -26,15 +26,15 @@ const findAll = ({ page, limit, }) => __awaiter(void 0, void 0, void 0, function
 });
 /**specific resource findOneByKey */
 const findOneByKey = (params) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield models_1.Models.Category.findOne(Object.assign({}, params));
+    return yield category_model_1.Category.findOne(Object.assign({}, params));
 });
 /**specific reosouce findOneById */
 const findOneById = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield models_1.Models.Category.findById(_id);
+    return yield category_model_1.Category.findById(_id);
 });
 /**create resource */
 const resourceCreate = ({ data, }) => __awaiter(void 0, void 0, void 0, function* () {
-    const newCategory = new models_1.Models.Category({
+    const newCategory = new category_model_1.Category({
         name: data.name,
         slug: slug(data.name),
         icon: data.icon,
@@ -44,7 +44,7 @@ const resourceCreate = ({ data, }) => __awaiter(void 0, void 0, void 0, function
 });
 /**findByIdAndUpdate resource  */
 const findByIdAndUpdate = ({ _id, data, }) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield models_1.Models.Category.findByIdAndUpdate(_id, {
+    return yield category_model_1.Category.findByIdAndUpdate(_id, {
         $set: {
             name: data.name,
             slug: slug(data.name),
@@ -55,12 +55,12 @@ const findByIdAndUpdate = ({ _id, data, }) => __awaiter(void 0, void 0, void 0, 
 });
 /**specific resource findByIdAndDelete  */
 const findByIdAndDelete = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield models_1.Models.Category.findByIdAndDelete(_id);
+    return yield category_model_1.Category.findByIdAndDelete(_id);
 });
 /* Search by key */
 const searchByKey = (query) => __awaiter(void 0, void 0, void 0, function* () {
     const queryRegExp = new RegExp(query, "i");
-    return yield models_1.Models.Category.find({
+    return yield category_model_1.Category.find({
         $or: [{ name: queryRegExp }, { slug: queryRegExp }],
     }, {
         created_by: 0,

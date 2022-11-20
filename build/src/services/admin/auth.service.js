@@ -9,16 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Registration = exports.findOneByKey = void 0;
-const models_1 = require("../../models");
+exports.adminAuthService = void 0;
+const admin_model_1 = require("../../models/admin.model");
 /**specific resource findByKey */
 const findOneByKey = (params) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield models_1.Models.Admin.findOne(Object.assign({}, params));
+    return yield admin_model_1.Admin.findOne(Object.assign({}, params));
 });
-exports.findOneByKey = findOneByKey;
 /**resource store */
-const Registration = (data) => __awaiter(void 0, void 0, void 0, function* () {
-    const newAdmin = new models_1.Models.Admin({
+const Registration = ({ data, }) => __awaiter(void 0, void 0, void 0, function* () {
+    const newAdmin = new admin_model_1.Admin({
         name: data.name,
         email: data.email,
         phone: data.phone,
@@ -27,4 +26,7 @@ const Registration = (data) => __awaiter(void 0, void 0, void 0, function* () {
     });
     return yield newAdmin.save();
 });
-exports.Registration = Registration;
+exports.adminAuthService = {
+    findOneByKey,
+    Registration,
+};

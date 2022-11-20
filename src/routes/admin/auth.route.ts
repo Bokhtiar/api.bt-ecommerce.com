@@ -1,7 +1,7 @@
 import { Router } from "express";
-import {validator} from '../../validators/admin'
-import * as AuthController from '../../controllers/admin/auth.controller'
+import { loginValidators } from "../../validators/admin/login.validators";
+import * as AuthController from "../../controllers/admin/auth.controller";
 
 export const AuthRouter: Router = Router();
-AuthRouter.post("/login",validator.login.createUpdate,AuthController.login);
-AuthRouter.post("/register",validator.register.createUpdate, AuthController.register);
+AuthRouter.post("/login", loginValidators, AuthController.login);
+AuthRouter.post("/register", loginValidators, AuthController.register);

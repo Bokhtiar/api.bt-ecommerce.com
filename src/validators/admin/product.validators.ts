@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { validMongooseId } from "../../helpers/validMongooseID.helper";
 
 /* Resource create & update validaor */
-export const createUpdate = async (
+export const productCreateUpdateValidator = async (
   req: Request,
   res: Response,
   next: NextFunction
