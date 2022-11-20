@@ -9,10 +9,10 @@ import { userCategoryRouter } from "./user/category.route";
 
 export const AppRouter: Router = Router();
 AppRouter.use("/admin/auth", AdminRouter);
-AppRouter.use("/category", categoryRouter);
-AppRouter.use("/sub-category", subCategoryRoute)
-AppRouter.use("/Product", productRouter);
+AppRouter.use("/admin/category", categoryRouter);
+AppRouter.use("/admin/sub-category", subCategoryRoute)
+AppRouter.use("/admin/Product", productRouter);
 
 /* user routes */
 AppRouter.use("/user/auth", UserRouter);
-AppRouter.use("/user/category", userCategoryRouter )
+AppRouter.use("/category", userCategoryRouter )

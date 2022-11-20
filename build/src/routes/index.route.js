@@ -10,9 +10,9 @@ const user_route_1 = require("./user/user.route");
 const category_route_2 = require("./user/category.route");
 exports.AppRouter = (0, express_1.Router)();
 exports.AppRouter.use("/admin/auth", admin_route_1.AdminRouter);
-exports.AppRouter.use("/category", category_route_1.categoryRouter);
-exports.AppRouter.use("/sub-category", subCategory_route_1.subCategoryRoute);
-exports.AppRouter.use("/Product", product_route_1.productRouter);
+exports.AppRouter.use("/admin/category", category_route_1.categoryRouter);
+exports.AppRouter.use("/admin/sub-category", subCategory_route_1.subCategoryRoute);
+exports.AppRouter.use("/admin/Product", product_route_1.productRouter);
 /* user routes */
 exports.AppRouter.use("/user/auth", user_route_1.UserRouter);
-exports.AppRouter.use("/user/category", category_route_2.userCategoryRouter);
+exports.AppRouter.use("/category", category_route_2.userCategoryRouter);
