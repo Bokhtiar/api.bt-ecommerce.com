@@ -26,12 +26,12 @@ const findAll = async ({
     .exec();
 };
 
-/**specific resource findOneByKey */
+/* specific resource findOneByKey */
 const findOneByKey = async (params: any): Promise<ICategory | null> => {
   return await Category.findOne({ ...params });
 };
 
-/**specific reosouce findOneById */
+/* specific reosouce findOneById */
 const findOneById = async ({
   _id,
 }: {
@@ -40,41 +40,41 @@ const findOneById = async ({
   return await Category.findById(_id);
 };
 
-/**create resource */
-const resourceCreate = async ({
-  data,
+/* create new resource */
+const categoryCreate = async ({
+  documents,
 }: {
-  data: ICategoryCreateOrUpdate;
+  documents: ICategoryCreateOrUpdate;
 }): Promise<ICategory | null> => {
   const newCategory = new Category({
-    name: data.name,
-    slug: slug(data.name),
-    icon: data.icon,
-    banner_image: data.banner_image,
+    name: documents.name,
+    slug: slug(documents.name),
+    icon: documents.icon,
+    banner_image: documents.banner_image,
   });
   return await newCategory.save();
 };
 
-/**findByIdAndUpdate resource  */
-const findByIdAndUpdate = async ({
+/* specific one resource findByIdAndUpdate */
+const findOneByIdAndUpdate = async ({
   _id,
-  data,
+  documents,
 }: {
   _id: Types.ObjectId;
-  data: ICategoryCreateOrUpdate;
+  documents: ICategoryCreateOrUpdate;
 }): Promise<ICategory | null> => {
   return await Category.findByIdAndUpdate(_id, {
     $set: {
-      name: data.name,
-      slug: slug(data.name),
-      icon: data.icon,
-      banner_image: data.banner_image,
+      name: documents.name,
+      slug: slug(documents.name),
+      icon: documents.icon,
+      banner_image: documents.banner_image,
     },
   });
 };
 
-/**specific resource findByIdAndDelete  */
-const findByIdAndDelete = async ({
+/* specific resource findByIdAndDelete  */
+const findOneByIdAndDelete = async ({
   _id,
 }: {
   _id: Types.ObjectId;
@@ -83,7 +83,7 @@ const findByIdAndDelete = async ({
 };
 
 /* Search by key */
-const searchByKey = async (query: string): Promise<ICategory[] | []> => {
+const searchByKey = async ({query}:{query:string}): Promise<ICategory[] | []> => {
   const queryRegExp = new RegExp(query, "i");
   return await Category.find(
     {
@@ -101,7 +101,7 @@ export const adminCategoryService = {
   searchByKey,
   findOneById,
   findOneByKey,
-  resourceCreate,
-  findByIdAndUpdate,
-  findByIdAndDelete,
+  categoryCreate,
+  findOneByIdAndUpdate,
+  findOneByIdAndDelete,
 };

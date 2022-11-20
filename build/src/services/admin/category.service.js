@@ -24,41 +24,41 @@ const findAll = ({ page, limit, }) => __awaiter(void 0, void 0, void 0, function
         .limit(limit)
         .exec();
 });
-/**specific resource findOneByKey */
+/* specific resource findOneByKey */
 const findOneByKey = (params) => __awaiter(void 0, void 0, void 0, function* () {
     return yield category_model_1.Category.findOne(Object.assign({}, params));
 });
-/**specific reosouce findOneById */
+/* specific reosouce findOneById */
 const findOneById = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
     return yield category_model_1.Category.findById(_id);
 });
-/**create resource */
-const resourceCreate = ({ data, }) => __awaiter(void 0, void 0, void 0, function* () {
+/* create new resource */
+const categoryCreate = ({ documents, }) => __awaiter(void 0, void 0, void 0, function* () {
     const newCategory = new category_model_1.Category({
-        name: data.name,
-        slug: slug(data.name),
-        icon: data.icon,
-        banner_image: data.banner_image,
+        name: documents.name,
+        slug: slug(documents.name),
+        icon: documents.icon,
+        banner_image: documents.banner_image,
     });
     return yield newCategory.save();
 });
-/**findByIdAndUpdate resource  */
-const findByIdAndUpdate = ({ _id, data, }) => __awaiter(void 0, void 0, void 0, function* () {
+/* specific one resource findByIdAndUpdate */
+const findOneByIdAndUpdate = ({ _id, documents, }) => __awaiter(void 0, void 0, void 0, function* () {
     return yield category_model_1.Category.findByIdAndUpdate(_id, {
         $set: {
-            name: data.name,
-            slug: slug(data.name),
-            icon: data.icon,
-            banner_image: data.banner_image,
+            name: documents.name,
+            slug: slug(documents.name),
+            icon: documents.icon,
+            banner_image: documents.banner_image,
         },
     });
 });
-/**specific resource findByIdAndDelete  */
-const findByIdAndDelete = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
+/* specific resource findByIdAndDelete  */
+const findOneByIdAndDelete = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
     return yield category_model_1.Category.findByIdAndDelete(_id);
 });
 /* Search by key */
-const searchByKey = (query) => __awaiter(void 0, void 0, void 0, function* () {
+const searchByKey = ({ query }) => __awaiter(void 0, void 0, void 0, function* () {
     const queryRegExp = new RegExp(query, "i");
     return yield category_model_1.Category.find({
         $or: [{ name: queryRegExp }, { slug: queryRegExp }],
@@ -72,7 +72,7 @@ exports.adminCategoryService = {
     searchByKey,
     findOneById,
     findOneByKey,
-    resourceCreate,
-    findByIdAndUpdate,
-    findByIdAndDelete,
+    categoryCreate,
+    findOneByIdAndUpdate,
+    findOneByIdAndDelete,
 };

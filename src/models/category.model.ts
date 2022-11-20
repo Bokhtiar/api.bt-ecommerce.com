@@ -1,7 +1,6 @@
 import { Schema, model } from "mongoose";
 import { ICategory } from "../types/admin/category.types";
 
-/**Category table filed */
 const categorySchema: Schema = new Schema<ICategory>(
   {
     name: {
@@ -28,5 +27,4 @@ const categorySchema: Schema = new Schema<ICategory>(
   }
 );
 
-/**Database table name deaclear */
 export const Category = model<ICategory>("Category", categorySchema);

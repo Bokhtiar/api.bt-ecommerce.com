@@ -1,8 +1,8 @@
 import { Schema, model } from "mongoose";
-import { IAuth } from "../types/admin/admin.types";
+import { IAdmin } from "../types/admin/admin.types";
 
 /**Admin database field */
-const adminSchema: Schema = new Schema<IAuth>(
+const adminSchema: Schema = new Schema<IAdmin>(
   {
     name: {
       type: String,
@@ -36,4 +36,4 @@ const adminSchema: Schema = new Schema<IAuth>(
 );
 
 /**Database name */
-export const Admin = model<IAuth>("Admin", adminSchema);
+export const Admin = model<IAdmin>("Admin", adminSchema);

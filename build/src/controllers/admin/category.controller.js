@@ -22,7 +22,9 @@ const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         const searchQuery = req.query.query;
         /* Search from query */
         if (searchQuery) {
-            results = yield category_service_1.adminCategoryService.searchByKey(searchQuery.toString());
+            results = yield category_service_1.adminCategoryService.searchByKey({
+                query: searchQuery.toString()
+            });
         }
         else {
             results = yield category_service_1.adminCategoryService.findAll({ page, limit });
@@ -58,8 +60,8 @@ const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
             icon,
             banner_image,
         };
-        yield category_service_1.adminCategoryService.resourceCreate({
-            data: Object.assign({}, documents),
+        yield category_service_1.adminCategoryService.categoryCreate({
+            documents: Object.assign({}, documents),
         });
         res.status(201).json({
             status: true,
@@ -112,9 +114,9 @@ const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
             icon,
             banner_image,
         };
-        yield category_service_1.adminCategoryService.findByIdAndUpdate({
+        yield category_service_1.adminCategoryService.findOneByIdAndUpdate({
             _id: new mongoose_1.Types.ObjectId(id),
-            data: Object.assign({}, documents),
+            documents: Object.assign({}, documents),
         });
         res.status(200).json({
             status: true,
@@ -141,7 +143,7 @@ const destroy = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
                 message: "Category not found",
             });
         }
-        yield category_service_1.adminCategoryService.findByIdAndDelete({
+        yield category_service_1.adminCategoryService.findOneByIdAndDelete({
             _id: new mongoose_1.Types.ObjectId(id),
         });
         res.status(200).json({

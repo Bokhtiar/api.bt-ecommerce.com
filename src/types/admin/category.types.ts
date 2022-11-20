@@ -6,7 +6,7 @@ export interface ICategory {
   slug: string;
   icon: string;
   banner_image: string;
-}
+} 
 
 export interface ICategoryCreateOrUpdate {
   name: string;

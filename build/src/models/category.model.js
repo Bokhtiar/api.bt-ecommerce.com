@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Category = void 0;
 const mongoose_1 = require("mongoose");
-/**Category table filed */
 const categorySchema = new mongoose_1.Schema({
     name: {
         type: String,
@@ -25,5 +24,4 @@ const categorySchema = new mongoose_1.Schema({
 }, {
     timestamps: true,
 });
-/**Database table name deaclear */
 exports.Category = (0, mongoose_1.model)("Category", categorySchema);

@@ -19,7 +19,9 @@ export const index = async (
 
     /* Search from query */
     if (searchQuery) {
-      results = await adminCategoryService.searchByKey(searchQuery.toString());
+      results = await adminCategoryService.searchByKey({
+        query: searchQuery.toString()
+      });
     } else {
       results = await adminCategoryService.findAll({ page, limit });
     }
@@ -60,8 +62,8 @@ export const store = async (
       banner_image,
     };
 
-    await adminCategoryService.resourceCreate({
-      data: { ...documents },
+    await adminCategoryService.categoryCreate({
+      documents: { ...documents },
     });
     res.status(201).json({
       status: true,
@@ -120,9 +122,9 @@ export const update = async (
       banner_image,
     };
 
-    await adminCategoryService.findByIdAndUpdate({
+    await adminCategoryService.findOneByIdAndUpdate({
       _id: new Types.ObjectId(id),
-      data: { ...documents },
+      documents: { ...documents },
     });
     res.status(200).json({
       status: true,
@@ -154,7 +156,7 @@ export const destroy = async (
       });
     }
 
-    await adminCategoryService.findByIdAndDelete({
+    await adminCategoryService.findOneByIdAndDelete({
       _id: new Types.ObjectId(id),
     });
 

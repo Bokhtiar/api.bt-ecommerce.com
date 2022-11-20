@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { loginValidators } from "../../validators/admin/login.validators";
-import * as AuthController from "../../controllers/admin/admin.controller";
+import * as AdminAuthController from "../../controllers/admin/admin.controller";
 
 export const AdminRouter: Router = Router();
-AdminRouter.post("/login", loginValidators, AuthController.login);
-AdminRouter.post("/register", loginValidators, AuthController.register);
+AdminRouter.post("/login", loginValidators, AdminAuthController.login);
+AdminRouter.post("/register", loginValidators, AdminAuthController.register);
