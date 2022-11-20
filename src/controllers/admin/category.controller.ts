@@ -1,4 +1,4 @@
-import { service } from "../../services/admin";
+import { adminCategoryService } from "../../services/admin/category.service";
 import { Request, Response, NextFunction } from "express";
 import { paginate, paginateQueryParams } from "../../helpers/pagination.helper";
 import { Types } from "mongoose";
@@ -11,19 +11,17 @@ export const index = async (
   next: NextFunction
 ) => {
   try {
-    let results:any = [];
+    let results: any = [];
 
-    const totalItems = await service.Category.countAll();
+    const totalItems = await adminCategoryService.countAll();
     const { limit, page } = paginateQueryParams(req.query);
     const searchQuery = req.query.query;
 
     /* Search from query */
     if (searchQuery) {
-      results = await service.Category.searchByKey(
-        searchQuery.toString()
-      );
-    }else{
-      results = await service.Category.findAll({ page, limit });
+      results = await adminCategoryService.searchByKey(searchQuery.toString());
+    } else {
+      results = await adminCategoryService.findAll({ page, limit });
     }
     res.status(200).json({
       status: true,
@@ -48,7 +46,7 @@ export const store = async (
     const { name, icon, banner_image } = req.body;
 
     /* check already exist name */
-    const isExistName = await service.Category.findOneByKey({ name: name });
+    const isExistName = await adminCategoryService.findOneByKey({ name: name });
     if (isExistName) {
       return res.status(409).json({
         status: false,
@@ -56,15 +54,15 @@ export const store = async (
       });
     }
 
-    const documents:ICategoryCreateOrUpdate = {
+    const documents: ICategoryCreateOrUpdate = {
       name,
       icon,
       banner_image,
     };
 
-    await service.Category.resourceCreate({
-      data: {...documents}
-    })
+    await adminCategoryService.resourceCreate({
+      data: { ...documents },
+    });
     res.status(201).json({
       status: true,
       message: "Category Created.",
@@ -81,9 +79,9 @@ export const store = async (
 export const show = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const result = await service.Category.findOneById({
-      _id: new Types.ObjectId(id)
-    })
+    const result = await adminCategoryService.findOneById({
+      _id: new Types.ObjectId(id),
+    });
 
     res.status(200).json({
       status: true,
@@ -108,7 +106,7 @@ export const update = async (
     const { name, icon, banner_image } = req.body;
 
     /* check unique name */
-    const existWithName = await service.Category.findOneByKey({ name });
+    const existWithName = await adminCategoryService.findOneByKey({ name });
     if (existWithName && existWithName._id.toString() !== id) {
       return res.status(409).json({
         status: false,
@@ -122,9 +120,9 @@ export const update = async (
       banner_image,
     };
 
-    await service.Category.findByIdAndUpdate({
+    await adminCategoryService.findByIdAndUpdate({
       _id: new Types.ObjectId(id),
-      data: {...documents}
+      data: { ...documents },
     });
     res.status(200).json({
       status: true,
@@ -146,20 +144,20 @@ export const destroy = async (
     const { id } = req.params;
 
     /* check avaialbe category */
-    const availableCategory = await service.Category.findOneById({
-      _id : new Types.ObjectId(id)
-    })
-    if(!availableCategory){
+    const availableCategory = await adminCategoryService.findOneById({
+      _id: new Types.ObjectId(id),
+    });
+    if (!availableCategory) {
       return res.status(404).json({
         status: false,
-        message: "Category not found"
-      })
+        message: "Category not found",
+      });
     }
 
-    await service.Category.findByIdAndDelete({
-      _id: new Types.ObjectId(id)
+    await adminCategoryService.findByIdAndDelete({
+      _id: new Types.ObjectId(id),
     });
-    
+
     res.status(200).json({
       status: true,
       message: "Category deleted.",

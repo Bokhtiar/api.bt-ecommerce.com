@@ -9,14 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.searchByKey = exports.findByIdAndDelete = exports.findByIdAndUpdate = exports.resourceCreate = exports.findOneById = exports.findOneByKey = exports.findAll = exports.countAll = void 0;
+exports.adminCategoryService = void 0;
 const slug = require("slug");
 const models_1 = require("../../models");
-/**Category count */
+/* count all */
 const countAll = () => __awaiter(void 0, void 0, void 0, function* () {
     return models_1.Models.Category.countDocuments();
 });
-exports.countAll = countAll;
 /* find resources by paginate */
 const findAll = ({ page, limit, }) => __awaiter(void 0, void 0, void 0, function* () {
     return yield models_1.Models.Category.find()
@@ -25,17 +24,14 @@ const findAll = ({ page, limit, }) => __awaiter(void 0, void 0, void 0, function
         .limit(limit)
         .exec();
 });
-exports.findAll = findAll;
 /**specific resource findOneByKey */
 const findOneByKey = (params) => __awaiter(void 0, void 0, void 0, function* () {
     return yield models_1.Models.Category.findOne(Object.assign({}, params));
 });
-exports.findOneByKey = findOneByKey;
 /**specific reosouce findOneById */
 const findOneById = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
     return yield models_1.Models.Category.findById(_id);
 });
-exports.findOneById = findOneById;
 /**create resource */
 const resourceCreate = ({ data, }) => __awaiter(void 0, void 0, void 0, function* () {
     const newCategory = new models_1.Models.Category({
@@ -46,7 +42,6 @@ const resourceCreate = ({ data, }) => __awaiter(void 0, void 0, void 0, function
     });
     return yield newCategory.save();
 });
-exports.resourceCreate = resourceCreate;
 /**findByIdAndUpdate resource  */
 const findByIdAndUpdate = ({ _id, data, }) => __awaiter(void 0, void 0, void 0, function* () {
     return yield models_1.Models.Category.findByIdAndUpdate(_id, {
@@ -58,12 +53,10 @@ const findByIdAndUpdate = ({ _id, data, }) => __awaiter(void 0, void 0, void 0, 
         },
     });
 });
-exports.findByIdAndUpdate = findByIdAndUpdate;
 /**specific resource findByIdAndDelete  */
 const findByIdAndDelete = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
     return yield models_1.Models.Category.findByIdAndDelete(_id);
 });
-exports.findByIdAndDelete = findByIdAndDelete;
 /* Search by key */
 const searchByKey = (query) => __awaiter(void 0, void 0, void 0, function* () {
     const queryRegExp = new RegExp(query, "i");
@@ -73,4 +66,13 @@ const searchByKey = (query) => __awaiter(void 0, void 0, void 0, function* () {
         created_by: 0,
     });
 });
-exports.searchByKey = searchByKey;
+exports.adminCategoryService = {
+    findAll,
+    countAll,
+    searchByKey,
+    findOneById,
+    findOneByKey,
+    resourceCreate,
+    findByIdAndUpdate,
+    findByIdAndDelete,
+};

@@ -10,22 +10,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.destroy = exports.update = exports.show = exports.store = exports.index = void 0;
-const admin_1 = require("../../services/admin");
+const category_service_1 = require("../../services/admin/category.service");
 const pagination_helper_1 = require("../../helpers/pagination.helper");
 const mongoose_1 = require("mongoose");
 /* List of resources */
 const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let results = [];
-        const totalItems = yield admin_1.service.Category.countAll();
+        const totalItems = yield category_service_1.adminCategoryService.countAll();
         const { limit, page } = (0, pagination_helper_1.paginateQueryParams)(req.query);
         const searchQuery = req.query.query;
         /* Search from query */
         if (searchQuery) {
-            results = yield admin_1.service.Category.searchByKey(searchQuery.toString());
+            results = yield category_service_1.adminCategoryService.searchByKey(searchQuery.toString());
         }
         else {
-            results = yield admin_1.service.Category.findAll({ page, limit });
+            results = yield category_service_1.adminCategoryService.findAll({ page, limit });
         }
         res.status(200).json({
             status: true,
@@ -46,7 +46,7 @@ const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
     try {
         const { name, icon, banner_image } = req.body;
         /* check already exist name */
-        const isExistName = yield admin_1.service.Category.findOneByKey({ name: name });
+        const isExistName = yield category_service_1.adminCategoryService.findOneByKey({ name: name });
         if (isExistName) {
             return res.status(409).json({
                 status: false,
@@ -58,8 +58,8 @@ const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
             icon,
             banner_image,
         };
-        yield admin_1.service.Category.resourceCreate({
-            data: Object.assign({}, documents)
+        yield category_service_1.adminCategoryService.resourceCreate({
+            data: Object.assign({}, documents),
         });
         res.status(201).json({
             status: true,
@@ -78,8 +78,8 @@ exports.store = store;
 const show = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const result = yield admin_1.service.Category.findOneById({
-            _id: new mongoose_1.Types.ObjectId(id)
+        const result = yield category_service_1.adminCategoryService.findOneById({
+            _id: new mongoose_1.Types.ObjectId(id),
         });
         res.status(200).json({
             status: true,
@@ -100,7 +100,7 @@ const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
         const { id } = req.params;
         const { name, icon, banner_image } = req.body;
         /* check unique name */
-        const existWithName = yield admin_1.service.Category.findOneByKey({ name });
+        const existWithName = yield category_service_1.adminCategoryService.findOneByKey({ name });
         if (existWithName && existWithName._id.toString() !== id) {
             return res.status(409).json({
                 status: false,
@@ -112,9 +112,9 @@ const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
             icon,
             banner_image,
         };
-        yield admin_1.service.Category.findByIdAndUpdate({
+        yield category_service_1.adminCategoryService.findByIdAndUpdate({
             _id: new mongoose_1.Types.ObjectId(id),
-            data: Object.assign({}, documents)
+            data: Object.assign({}, documents),
         });
         res.status(200).json({
             status: true,
@@ -132,17 +132,17 @@ const destroy = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
     try {
         const { id } = req.params;
         /* check avaialbe category */
-        const availableCategory = yield admin_1.service.Category.findOneById({
-            _id: new mongoose_1.Types.ObjectId(id)
+        const availableCategory = yield category_service_1.adminCategoryService.findOneById({
+            _id: new mongoose_1.Types.ObjectId(id),
         });
         if (!availableCategory) {
             return res.status(404).json({
                 status: false,
-                message: "Category not found"
+                message: "Category not found",
             });
         }
-        yield admin_1.service.Category.findByIdAndDelete({
-            _id: new mongoose_1.Types.ObjectId(id)
+        yield category_service_1.adminCategoryService.findByIdAndDelete({
+            _id: new mongoose_1.Types.ObjectId(id),
         });
         res.status(200).json({
             status: true,

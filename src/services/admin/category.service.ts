@@ -6,13 +6,13 @@ import {
   ICategoryCreateOrUpdate,
 } from "../../types/admin/category.types";
 
-/**Category count */
-export const countAll = async (): Promise<number> => {
+/* count all */
+const countAll = async (): Promise<number> => {
   return Models.Category.countDocuments();
 };
 
 /* find resources by paginate */
-export const findAll = async ({
+const findAll = async ({
   page,
   limit,
 }: {
@@ -27,12 +27,12 @@ export const findAll = async ({
 };
 
 /**specific resource findOneByKey */
-export const findOneByKey = async (params: any): Promise<ICategory | null> => {
+const findOneByKey = async (params: any): Promise<ICategory | null> => {
   return await Models.Category.findOne({ ...params });
 };
 
 /**specific reosouce findOneById */
-export const findOneById = async ({
+const findOneById = async ({
   _id,
 }: {
   _id: Types.ObjectId;
@@ -41,7 +41,7 @@ export const findOneById = async ({
 };
 
 /**create resource */
-export const resourceCreate = async ({
+const resourceCreate = async ({
   data,
 }: {
   data: ICategoryCreateOrUpdate;
@@ -56,7 +56,7 @@ export const resourceCreate = async ({
 };
 
 /**findByIdAndUpdate resource  */
-export const findByIdAndUpdate = async ({
+const findByIdAndUpdate = async ({
   _id,
   data,
 }: {
@@ -74,7 +74,7 @@ export const findByIdAndUpdate = async ({
 };
 
 /**specific resource findByIdAndDelete  */
-export const findByIdAndDelete = async ({
+const findByIdAndDelete = async ({
   _id,
 }: {
   _id: Types.ObjectId;
@@ -83,7 +83,7 @@ export const findByIdAndDelete = async ({
 };
 
 /* Search by key */
-export const searchByKey = async (query: string): Promise<ICategory[] | []> => {
+const searchByKey = async (query: string): Promise<ICategory[] | []> => {
   const queryRegExp = new RegExp(query, "i");
   return await Models.Category.find(
     {
@@ -94,3 +94,14 @@ export const searchByKey = async (query: string): Promise<ICategory[] | []> => {
     }
   );
 };
+
+export const adminCategoryService = {
+  findAll,
+  countAll,
+  searchByKey,
+  findOneById,
+  findOneByKey,
+  resourceCreate,
+  findByIdAndUpdate,
+  findByIdAndDelete,
+}
