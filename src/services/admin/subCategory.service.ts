@@ -1,4 +1,5 @@
 import { SubCategory } from "../../models/subCategory.model";
+import { Types } from "mongoose";
 import {
   ISubCategory,
   ISubCategoryCreateUpdate,
@@ -61,10 +62,42 @@ const searchByKey = async ({
   );
 };
 
+/* find one specific resource */
+const findOneById = async ({
+  _id,
+}: {
+  _id: Types.ObjectId;
+}): Promise<ISubCategory | null> => {
+  return await SubCategory.findById(_id).populate("category", "name");
+};
+
+/* find specific resource by update */
+const findByIdAndUpdate = async ({
+  _id,
+  data,
+}: {
+  _id: Types.ObjectId;
+  data: ISubCategoryCreateUpdate;
+}): Promise<ISubCategory | null> => {
+  return await SubCategory.findByIdAndUpdate(_id, { $set: { ...data } });
+};
+
+/* find specific resource by delete */
+const findByIdAndDelete = async ({
+  _id,
+}: {
+  _id: Types.ObjectId;
+}): Promise<ISubCategory | null> => {
+  return await SubCategory.findByIdAndDelete(_id);
+};
+
 export const adminSubCategoryService = {
   findAll,
   countAll,
+  findOneById,
   searchByKey,
   findOneByKey,
-  createResource
+  createResource,
+  findByIdAndUpdate,
+  findByIdAndDelete,
 };

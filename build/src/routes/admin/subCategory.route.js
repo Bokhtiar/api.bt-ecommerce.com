@@ -30,3 +30,6 @@ const subCategory_validators_1 = require("../../validators/admin/subCategory.val
 exports.subCategoryRoute = (0, express_1.Router)();
 exports.subCategoryRoute.get("/", subCategoryController.index);
 exports.subCategoryRoute.post("/", subCategory_validators_1.SubCategoryCreateUpdate, subCategoryController.store);
+exports.subCategoryRoute.get("/:id", subCategoryController.show);
+exports.subCategoryRoute.put("/:id", subCategory_validators_1.SubCategoryCreateUpdate, subCategoryController.update);
+exports.subCategoryRoute.delete("/:id", subCategoryController.destroy);

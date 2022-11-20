@@ -83,7 +83,97 @@ export const store = async (
 
     res.status(201).json({
       status: true,
-      message: "Sub category created."
+      message: "Sub category created.",
+    });
+  } catch (error: any) {
+    console.log(error);
+    next(error);
+  }
+};
+
+/* spacific resource show */
+export const show = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.params;
+    const result = await adminSubCategoryService.findOneById({
+      _id: new Types.ObjectId(id),
+    });
+    res.status(200).json({
+      status: true,
+      data: result,
+    });
+  } catch (error: any) {
+    console.log(error);
+    next(error);
+  }
+};
+
+/* spacific reousrce update */
+export const update = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const { category, name, logo, banner_image } = req.body;
+
+    /* check unique name */
+    const existWithName = await adminSubCategoryService.findOneByKey({ name });
+    if (existWithName && existWithName._id.toString() !== id) {
+      return res.status(409).json({
+        status: false,
+        message: "This name already exists.",
+      });
+    }
+
+    /* check available category */
+    const availableCategory = await adminCategoryService.findOneById({
+      _id: new Types.ObjectId(category),
+    });
+    if (!availableCategory) {
+      return res.status(404).json({
+        status: false,
+        message: "Category not found.",
+      });
+    }
+
+    const document: ISubCategoryCreateUpdate = {
+      category: new Types.ObjectId(category),
+      name,
+      logo,
+      banner_image,
+    };
+
+    await adminSubCategoryService.findByIdAndUpdate({
+      _id: new Types.ObjectId(id),
+      data: { ...document },
+    });
+
+    res.status(200).json({
+      status: true,
+      message: "Sub category updated.",
+    });
+  } catch (error: any) {
+    console.log(error);
+    next(error);
+  }
+};
+
+/* specific reource delete */
+export const destroy = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    await adminSubCategoryService.findByIdAndDelete({
+      _id: new Types.ObjectId(id),
+    });
+    res.status(200).json({
+      status: true,
+      message: "Sub category deleted."
     });
   } catch (error: any) {
     console.log(error);

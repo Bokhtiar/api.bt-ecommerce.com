@@ -10,3 +10,11 @@ subCategoryRoute.post(
   SubCategoryCreateUpdate,
   subCategoryController.store
 );
+subCategoryRoute.get("/:id", subCategoryController.show);
+subCategoryRoute.put(
+  "/:id",
+  SubCategoryCreateUpdate,
+  subCategoryController.update
+);
+
+subCategoryRoute.delete("/:id", subCategoryController.destroy);

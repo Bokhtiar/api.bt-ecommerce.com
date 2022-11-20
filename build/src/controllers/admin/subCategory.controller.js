@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.store = exports.index = void 0;
+exports.destroy = exports.update = exports.show = exports.store = exports.index = void 0;
 const mongoose_1 = require("mongoose");
 const category_service_1 = require("../../services/admin/category.service");
 const subCategory_service_1 = require("../../services/admin/subCategory.service");
@@ -75,7 +75,7 @@ const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         yield subCategory_service_1.adminSubCategoryService.createResource({ data: Object.assign({}, documents) });
         res.status(201).json({
             status: true,
-            message: "Sub category created."
+            message: "Sub category created.",
         });
     }
     catch (error) {
@@ -84,3 +84,83 @@ const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.store = store;
+/* spacific resource show */
+const show = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const result = yield subCategory_service_1.adminSubCategoryService.findOneById({
+            _id: new mongoose_1.Types.ObjectId(id),
+        });
+        res.status(200).json({
+            status: true,
+            data: result,
+        });
+    }
+    catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+exports.show = show;
+/* spacific reousrce update */
+const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const { category, name, logo, banner_image } = req.body;
+        /* check unique name */
+        const existWithName = yield subCategory_service_1.adminSubCategoryService.findOneByKey({ name });
+        if (existWithName && existWithName._id.toString() !== id) {
+            return res.status(409).json({
+                status: false,
+                message: "This name already exists.",
+            });
+        }
+        /* check available category */
+        const availableCategory = yield category_service_1.adminCategoryService.findOneById({
+            _id: new mongoose_1.Types.ObjectId(category),
+        });
+        if (!availableCategory) {
+            return res.status(404).json({
+                status: false,
+                message: "Category not found.",
+            });
+        }
+        const document = {
+            category: new mongoose_1.Types.ObjectId(category),
+            name,
+            logo,
+            banner_image,
+        };
+        yield subCategory_service_1.adminSubCategoryService.findByIdAndUpdate({
+            _id: new mongoose_1.Types.ObjectId(id),
+            data: Object.assign({}, document),
+        });
+        res.status(200).json({
+            status: true,
+            message: "Sub category updated.",
+        });
+    }
+    catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+exports.update = update;
+/* specific reource delete */
+const destroy = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        yield subCategory_service_1.adminSubCategoryService.findByIdAndDelete({
+            _id: new mongoose_1.Types.ObjectId(id),
+        });
+        res.status(200).json({
+            status: true,
+            message: "Sub category deleted."
+        });
+    }
+    catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+exports.destroy = destroy;
