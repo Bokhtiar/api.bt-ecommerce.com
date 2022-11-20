@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.adminSubCategoryService = void 0;
 const subCategory_model_1 = require("../../models/subCategory.model");
-/* count all documents */
+/* count all */
 const countAll = () => __awaiter(void 0, void 0, void 0, function* () {
     return yield subCategory_model_1.SubCategory.countDocuments();
 });
@@ -28,14 +28,26 @@ const findOneByKey = (data) => __awaiter(void 0, void 0, void 0, function* () {
     return yield subCategory_model_1.SubCategory.findOne(Object.assign({}, data));
 });
 /* create new resource */
-const createResource = ({ data, }) => __awaiter(void 0, void 0, void 0, function* () {
+const subcategoryCreate = ({ documents, }) => __awaiter(void 0, void 0, void 0, function* () {
     const newSubCategory = new subCategory_model_1.SubCategory({
-        category: data.category,
-        name: data.name,
-        logo: data.logo,
-        banner_image: data.logo,
+        category: documents.category,
+        name: documents.name,
+        logo: documents.logo,
+        banner_image: documents.logo,
     });
     return yield newSubCategory.save();
+});
+/* find one specific resource */
+const findOneById = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield subCategory_model_1.SubCategory.findById(_id).populate("category", "name");
+});
+/* find specific resource by update */
+const findOneByIdAndUpdate = ({ _id, documents, }) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield subCategory_model_1.SubCategory.findByIdAndUpdate(_id, { $set: Object.assign({}, documents) });
+});
+/* find specific resource by delete */
+const findOneByIdAndDelete = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield subCategory_model_1.SubCategory.findByIdAndDelete(_id);
 });
 /* Search by key */
 const searchByKey = ({ query, }) => __awaiter(void 0, void 0, void 0, function* () {
@@ -46,25 +58,13 @@ const searchByKey = ({ query, }) => __awaiter(void 0, void 0, void 0, function* 
         created_by: 0,
     });
 });
-/* find one specific resource */
-const findOneById = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield subCategory_model_1.SubCategory.findById(_id).populate("category", "name");
-});
-/* find specific resource by update */
-const findByIdAndUpdate = ({ _id, data, }) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield subCategory_model_1.SubCategory.findByIdAndUpdate(_id, { $set: Object.assign({}, data) });
-});
-/* find specific resource by delete */
-const findByIdAndDelete = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield subCategory_model_1.SubCategory.findByIdAndDelete(_id);
-});
 exports.adminSubCategoryService = {
     findAll,
     countAll,
     findOneById,
     searchByKey,
     findOneByKey,
-    createResource,
-    findByIdAndUpdate,
-    findByIdAndDelete,
+    subcategoryCreate,
+    findOneByIdAndUpdate,
+    findOneByIdAndDelete,
 };

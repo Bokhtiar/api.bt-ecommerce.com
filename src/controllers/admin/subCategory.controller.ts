@@ -79,7 +79,7 @@ export const store = async (
       banner_image,
     };
 
-    await adminSubCategoryService.createResource({ data: { ...documents } });
+    await adminSubCategoryService.subcategoryCreate({ documents: { ...documents } });
 
     res.status(201).json({
       status: true,
@@ -145,9 +145,9 @@ export const update = async (
       banner_image,
     };
 
-    await adminSubCategoryService.findByIdAndUpdate({
+    await adminSubCategoryService.findOneByIdAndUpdate({
       _id: new Types.ObjectId(id),
-      data: { ...document },
+      documents: { ...document },
     });
 
     res.status(200).json({
@@ -168,7 +168,7 @@ export const destroy = async (
 ) => {
   try {
     const { id } = req.params;
-    await adminSubCategoryService.findByIdAndDelete({
+    await adminSubCategoryService.findOneByIdAndDelete({
       _id: new Types.ObjectId(id),
     });
     res.status(200).json({

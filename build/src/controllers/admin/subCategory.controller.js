@@ -72,7 +72,7 @@ const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
             logo,
             banner_image,
         };
-        yield subCategory_service_1.adminSubCategoryService.createResource({ data: Object.assign({}, documents) });
+        yield subCategory_service_1.adminSubCategoryService.subcategoryCreate({ documents: Object.assign({}, documents) });
         res.status(201).json({
             status: true,
             message: "Sub category created.",
@@ -131,9 +131,9 @@ const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
             logo,
             banner_image,
         };
-        yield subCategory_service_1.adminSubCategoryService.findByIdAndUpdate({
+        yield subCategory_service_1.adminSubCategoryService.findOneByIdAndUpdate({
             _id: new mongoose_1.Types.ObjectId(id),
-            data: Object.assign({}, document),
+            documents: Object.assign({}, document),
         });
         res.status(200).json({
             status: true,
@@ -150,7 +150,7 @@ exports.update = update;
 const destroy = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        yield subCategory_service_1.adminSubCategoryService.findByIdAndDelete({
+        yield subCategory_service_1.adminSubCategoryService.findOneByIdAndDelete({
             _id: new mongoose_1.Types.ObjectId(id),
         });
         res.status(200).json({

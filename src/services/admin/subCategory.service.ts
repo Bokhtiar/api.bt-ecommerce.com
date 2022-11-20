@@ -5,7 +5,7 @@ import {
   ISubCategoryCreateUpdate,
 } from "../../types/admin/subCategory.types";
 
-/* count all documents */
+/* count all */
 const countAll = async (): Promise<number> => {
   return await SubCategory.countDocuments();
 };
@@ -31,18 +31,47 @@ const findOneByKey = async (data: any): Promise<ISubCategory | null> => {
 };
 
 /* create new resource */
-const createResource = async ({
-  data,
+const subcategoryCreate = async ({
+  documents,
 }: {
-  data: ISubCategoryCreateUpdate;
+  documents: ISubCategoryCreateUpdate;
 }): Promise<ISubCategory | null> => {
   const newSubCategory = new SubCategory({
-    category: data.category,
-    name: data.name,
-    logo: data.logo,
-    banner_image: data.logo,
+    category: documents.category,
+    name: documents.name,
+    logo: documents.logo,
+    banner_image: documents.logo,
   });
   return await newSubCategory.save();
+};
+
+/* find one specific resource */
+const findOneById = async ({
+  _id,
+}: {
+  _id: Types.ObjectId;
+}): Promise<ISubCategory | null> => {
+  return await SubCategory.findById(_id).populate("category", "name");
+};
+
+/* find specific resource by update */
+const findOneByIdAndUpdate = async ({
+  _id,
+  documents,
+}: {
+  _id: Types.ObjectId;
+  documents: ISubCategoryCreateUpdate;
+}): Promise<ISubCategory | null> => {
+  return await SubCategory.findByIdAndUpdate(_id, { $set: { ...documents } });
+};
+
+/* find specific resource by delete */
+const findOneByIdAndDelete = async ({
+  _id,
+}: {
+  _id: Types.ObjectId;
+}): Promise<ISubCategory | null> => {
+  return await SubCategory.findByIdAndDelete(_id);
 };
 
 /* Search by key */
@@ -62,42 +91,13 @@ const searchByKey = async ({
   );
 };
 
-/* find one specific resource */
-const findOneById = async ({
-  _id,
-}: {
-  _id: Types.ObjectId;
-}): Promise<ISubCategory | null> => {
-  return await SubCategory.findById(_id).populate("category", "name");
-};
-
-/* find specific resource by update */
-const findByIdAndUpdate = async ({
-  _id,
-  data,
-}: {
-  _id: Types.ObjectId;
-  data: ISubCategoryCreateUpdate;
-}): Promise<ISubCategory | null> => {
-  return await SubCategory.findByIdAndUpdate(_id, { $set: { ...data } });
-};
-
-/* find specific resource by delete */
-const findByIdAndDelete = async ({
-  _id,
-}: {
-  _id: Types.ObjectId;
-}): Promise<ISubCategory | null> => {
-  return await SubCategory.findByIdAndDelete(_id);
-};
-
 export const adminSubCategoryService = {
   findAll,
   countAll,
   findOneById,
   searchByKey,
   findOneByKey,
-  createResource,
-  findByIdAndUpdate,
-  findByIdAndDelete,
+  subcategoryCreate,
+  findOneByIdAndUpdate,
+  findOneByIdAndDelete,
 };
