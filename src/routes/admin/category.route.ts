@@ -6,7 +6,7 @@ import * as categoryController from "../../controllers/admin/category.controller
 
 export const categoryRouter: Router = Router();
 
-categoryRouter.get("/", adminPermission, categoryController.index);
+categoryRouter.get("/", categoryController.index);
 
 categoryRouter.post(
   "/",

@@ -41,10 +41,14 @@ const adminPermission = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
     }
     catch (error) {
         if (error) {
-            return res.status(error.response.status).json({
-                status: error.response.data.status,
-                errors: [...error.response.data.errors],
+            res.status(404).json({
+                status: true,
+                message: "Token expaired."
             });
+            // return res.status(error.response.status).json({
+            //   status: error.response.data.status,
+            //   errors: [...error.response.data.errors],
+            // });
         }
     }
 });

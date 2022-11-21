@@ -37,10 +37,14 @@ export const adminPermission = async (
     return;
   } catch (error: any) {
     if (error) {
-      return res.status(error.response.status).json({
-        status: error.response.data.status,
-        errors: [...error.response.data.errors],
-      });
+      res.status(404).json({
+        status:true,
+        message: "Token expaired."
+      })
+      // return res.status(error.response.status).json({
+      //   status: error.response.data.status,
+      //   errors: [...error.response.data.errors],
+      // });
     }
   }
 };
