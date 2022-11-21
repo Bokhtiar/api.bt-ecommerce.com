@@ -11,9 +11,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.cartService = void 0;
 const cart_model_1 = require("../../models/cart.model");
+/* specific user find cart */
+const findAll = ({ _id }) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield cart_model_1.Cart.find({ user: _id, order: null });
+});
 /* cart store documents */
 const addToCart = ({ product_id, user_id }) => __awaiter(void 0, void 0, void 0, function* () {
-    /* check exist product availabe in same user */
+    /* find one cart already exist */
     const existCart = yield cart_model_1.Cart.findOne({ user: user_id, product: product_id });
     if (existCart) {
         let existQty;
@@ -29,5 +33,6 @@ const addToCart = ({ product_id, user_id }) => __awaiter(void 0, void 0, void 0,
     }
 });
 exports.cartService = {
+    findAll,
     addToCart
 };

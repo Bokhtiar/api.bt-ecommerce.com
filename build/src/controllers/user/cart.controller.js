@@ -9,9 +9,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.store = void 0;
+exports.store = exports.index = void 0;
 const mongoose_1 = require("mongoose");
 const cart_service_1 = require("../../services/user/cart.service");
+/* specidic user find all cart */
+const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.user;
+        const results = yield cart_service_1.cartService.findAll({ _id: new mongoose_1.Types.ObjectId(id) });
+        res.status(200).json({
+            status: true,
+            data: results
+        });
+    }
+    catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+exports.index = index;
 /* store documents */
 const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {

@@ -27,4 +27,5 @@ exports.cartRouter = void 0;
 const express_1 = require("express");
 const cartController = __importStar(require("../../controllers/user/cart.controller"));
 exports.cartRouter = (0, express_1.Router)();
+exports.cartRouter.get("/", cartController.index);
 exports.cartRouter.post("/:id", cartController.store);
