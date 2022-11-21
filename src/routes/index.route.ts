@@ -7,6 +7,7 @@ import { userProductRouter } from "./user/product.route";
 import { userCategoryRouter } from "./user/category.route";
 import { subCategoryRoute } from "./admin/subCategory.route";
 import { userSubCategoryRouter } from "./user/subCategory.route";
+import { userPermission } from "../middleware/user.permission.middleware";
 import { adminPermission } from "../middleware/admin.permission.middleware";
 
 export const AppRouter: Router = Router();
@@ -18,5 +19,5 @@ AppRouter.use("/admin/sub-category", adminPermission, subCategoryRoute);
 /* user routes */
 AppRouter.use("/user/auth", UserRouter);
 AppRouter.use("/product", userProductRouter);
-AppRouter.use("/category", userCategoryRouter);
+AppRouter.use("/category",userPermission, userCategoryRouter);
 AppRouter.use("/sub-category", userSubCategoryRouter);
