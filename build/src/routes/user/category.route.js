@@ -29,3 +29,4 @@ const categoryController = __importStar(require("../../controllers/user/category
 exports.userCategoryRouter = (0, express_1.Router)();
 exports.userCategoryRouter.get("/", categoryController.index);
 exports.userCategoryRouter.get("/:id", categoryController.show);
+exports.userCategoryRouter.get("/product/:id", categoryController.categoryHasAssingProduct);

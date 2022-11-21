@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.show = exports.index = void 0;
+exports.categoryHasAssingProduct = exports.show = exports.index = void 0;
 const mongoose_1 = require("mongoose");
 const category_service_1 = require("../../services/user/category.service");
 /* find all resource */
@@ -18,7 +18,7 @@ const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         const resutls = yield category_service_1.userCategoryService.findAll();
         res.status(200).json({
             status: true,
-            data: resutls
+            data: resutls,
         });
     }
     catch (error) {
@@ -31,10 +31,12 @@ exports.index = index;
 const show = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const result = yield category_service_1.userCategoryService.findOneById({ _id: new mongoose_1.Types.ObjectId(id) });
+        const result = yield category_service_1.userCategoryService.findOneById({
+            _id: new mongoose_1.Types.ObjectId(id),
+        });
         res.status(200).json({
             status: true,
-            data: result
+            data: result,
         });
     }
     catch (error) {
@@ -43,3 +45,19 @@ const show = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.show = show;
+/* find category has assing product */
+const categoryHasAssingProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const results = yield category_service_1.userCategoryService.categoryHasAssingProduct({ _id: new mongoose_1.Types.ObjectId(id) });
+        res.status(200).json({
+            status: true,
+            data: results,
+        });
+    }
+    catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+exports.categoryHasAssingProduct = categoryHasAssingProduct;

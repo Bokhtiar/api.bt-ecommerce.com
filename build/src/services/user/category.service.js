@@ -10,16 +10,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.userCategoryService = void 0;
+const product_model_1 = require("../../models/product.model");
 const category_model_1 = require("../../models/category.model");
 /* find all category */
 const findAll = () => __awaiter(void 0, void 0, void 0, function* () {
     return yield category_model_1.Category.find({}, { createdAt: 0, updatedAt: 0, banner_image: 0 });
 });
 /* find specific category */
-const findOneById = ({ _id }) => __awaiter(void 0, void 0, void 0, function* () {
+const findOneById = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
     return yield category_model_1.Category.findById(_id);
+});
+/* find category has assing product */
+const categoryHasAssingProduct = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield product_model_1.Product.find({ category: _id });
 });
 exports.userCategoryService = {
     findAll,
-    findOneById
+    findOneById,
+    categoryHasAssingProduct,
 };
