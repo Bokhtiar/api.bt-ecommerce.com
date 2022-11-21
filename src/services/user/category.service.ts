@@ -3,6 +3,7 @@ import { Product } from "../../models/product.model";
 import { Category } from "../../models/category.model";
 import { IProduct } from "../../types/user/product.types";
 import { ICategory } from "../../types/user/category.types";
+import { SubCategory } from "../../models/subCategory.model";
 
 /* find all category */
 const findAll = async (): Promise<ICategory[] | []> => {
@@ -30,8 +31,18 @@ const categoryHasAssingProduct = async ({
   return await Product.find({ category: _id });
 };
 
+/* find category has assign sub-category */
+const categoryHasAssignSubCategory = async ({
+  _id,
+}: {
+  _id: Types.ObjectId;
+}): Promise<ICategory[] | []> => {
+  return await SubCategory.find({ category: _id });
+};
+
 export const userCategoryService = {
   findAll,
   findOneById,
   categoryHasAssingProduct,
+  categoryHasAssignSubCategory
 };

@@ -9,29 +9,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userCategoryService = void 0;
+exports.userSubCategoryService = void 0;
 const product_model_1 = require("../../models/product.model");
-const category_model_1 = require("../../models/category.model");
 const subCategory_model_1 = require("../../models/subCategory.model");
-/* find all category */
+/* find all subcategory */
 const findAll = () => __awaiter(void 0, void 0, void 0, function* () {
-    return yield category_model_1.Category.find({}, { createdAt: 0, updatedAt: 0, banner_image: 0 });
+    return yield subCategory_model_1.SubCategory.find();
 });
-/* find specific category */
+/* specific resource by find one */
 const findOneById = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield category_model_1.Category.findById(_id);
+    return yield subCategory_model_1.SubCategory.findById(_id);
 });
-/* find category has assing product */
-const categoryHasAssingProduct = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield product_model_1.Product.find({ category: _id });
+/* subcategory has assign product */
+const subCategoryHasAssignProduct = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield product_model_1.Product.find({ subCategory: _id });
 });
-/* find category has assign sub-category */
-const categoryHasAssignSubCategory = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield subCategory_model_1.SubCategory.find({ category: _id });
-});
-exports.userCategoryService = {
+exports.userSubCategoryService = {
     findAll,
     findOneById,
-    categoryHasAssingProduct,
-    categoryHasAssignSubCategory
+    subCategoryHasAssignProduct,
 };

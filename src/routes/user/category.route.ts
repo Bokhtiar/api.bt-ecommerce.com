@@ -9,3 +9,5 @@ userCategoryRouter.get(
   "/product/:id",
   categoryController.categoryHasAssingProduct
 );
+
+userCategoryRouter.get("/sub-category/:id", categoryController.categoryHasAssignSubCategory)

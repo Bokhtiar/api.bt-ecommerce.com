@@ -23,11 +23,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userCategoryRouter = void 0;
+exports.userSubCategoryRouter = void 0;
 const express_1 = require("express");
-const categoryController = __importStar(require("../../controllers/user/category.controller"));
-exports.userCategoryRouter = (0, express_1.Router)();
-exports.userCategoryRouter.get("/", categoryController.index);
-exports.userCategoryRouter.get("/:id", categoryController.show);
-exports.userCategoryRouter.get("/product/:id", categoryController.categoryHasAssingProduct);
-exports.userCategoryRouter.get("/sub-category/:id", categoryController.categoryHasAssignSubCategory);
+const subCategoryController = __importStar(require("../../controllers/user/subCategory.controller"));
+exports.userSubCategoryRouter = (0, express_1.Router)();
+exports.userSubCategoryRouter.get("/", subCategoryController.index);
+exports.userSubCategoryRouter.get("/product/:id", subCategoryController.subcategoryHasAssingProduct);

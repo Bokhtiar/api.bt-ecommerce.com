@@ -45,13 +45,36 @@ export const categoryHasAssingProduct = async (
   next: NextFunction
 ) => {
   try {
-    const {id} = req.params
-    const results = await userCategoryService.categoryHasAssingProduct({_id:new Types.ObjectId(id)})
+    const { id } = req.params;
+    const results = await userCategoryService.categoryHasAssingProduct({
+      _id: new Types.ObjectId(id),
+    });
 
     res.status(200).json({
-        status: true,
-        data: results,
-    })
+      status: true,
+      data: results,
+    });
+  } catch (error: any) {
+    console.log(error);
+    next(error);
+  }
+};
+
+/* find category has assign subcategory */
+export const categoryHasAssignSubCategory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const results = await userCategoryService.categoryHasAssignSubCategory({
+      _id: new Types.ObjectId(id),
+    });
+    res.status(200).json({
+      status: true,
+      data: results,
+    });
   } catch (error: any) {
     console.log(error);
     next(error);
