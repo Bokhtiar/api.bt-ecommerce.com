@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { cartRouter } from "./user/cart.route";
 import { UserRouter } from "./user/user.route";
 import { AdminRouter } from "./admin/admin.route";
 import { productRouter } from "./admin/product.route";
@@ -10,6 +11,7 @@ import { userSubCategoryRouter } from "./user/subCategory.route";
 import { userPermission } from "../middleware/user.permission.middleware";
 import { adminPermission } from "../middleware/admin.permission.middleware";
 
+
 export const AppRouter: Router = Router();
 AppRouter.use("/admin/auth", AdminRouter);
 AppRouter.use("/admin/Product", adminPermission, productRouter);
@@ -18,6 +20,7 @@ AppRouter.use("/admin/sub-category", adminPermission, subCategoryRoute);
 
 /* user routes */
 AppRouter.use("/user/auth", UserRouter);
+AppRouter.use("/cart",userPermission, cartRouter)
 AppRouter.use("/product", userProductRouter);
 AppRouter.use("/category", userCategoryRouter);
 AppRouter.use("/sub-category", userSubCategoryRouter);
