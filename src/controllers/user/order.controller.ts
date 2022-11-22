@@ -82,3 +82,22 @@ export const store = async (
     next(error);
   }
 };
+
+/* find specific order details */
+export const show = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.params;
+    const userID = req.user.id;
+    const results = await userOrderService.orderCartItems({
+      user_id: new Types.ObjectId(userID),
+      order_id: new Types.ObjectId(id),
+    });
+    res.status(200).json({
+      status: true,
+      data: results,
+    });
+  } catch (error: any) {
+    console.log(error);
+    next(error);
+  }
+};

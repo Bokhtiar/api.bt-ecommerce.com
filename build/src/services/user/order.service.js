@@ -37,7 +37,7 @@ const orderCreate = ({ userID, documents, }) => __awaiter(void 0, void 0, void 0
     });
     /* find by cart item, each cart item push order_id */
     if (newOrder) {
-        results.forEach(element => {
+        results.forEach((element) => {
             element.order = newOrder._id;
             element.save();
         });
@@ -46,7 +46,9 @@ const orderCreate = ({ userID, documents, }) => __awaiter(void 0, void 0, void 0
 });
 /* specific order cart items */
 const orderCartItems = ({ user_id, order_id, }) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield cart_model_1.Cart.find({ user: user_id, order: order_id });
+    return yield cart_model_1.Cart.find({ user: user_id, order: order_id })
+        .populate("product", "name sale_price regular_price image")
+        .populate("user", "name email phone");
 });
 exports.userOrderService = {
     findAll,

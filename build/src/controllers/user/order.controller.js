@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.store = exports.index = void 0;
+exports.show = exports.store = exports.index = void 0;
 const mongoose_1 = require("mongoose");
 const cart_service_1 = require("../../services/user/cart.service");
 const order_service_1 = require("../../services/user/order.service");
@@ -73,3 +73,23 @@ const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.store = store;
+/* find specific order details */
+const show = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const userID = req.user.id;
+        const results = yield order_service_1.userOrderService.orderCartItems({
+            user_id: new mongoose_1.Types.ObjectId(userID),
+            order_id: new mongoose_1.Types.ObjectId(id),
+        });
+        res.status(200).json({
+            status: true,
+            data: results,
+        });
+    }
+    catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+exports.show = show;

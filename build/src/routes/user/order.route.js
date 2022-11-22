@@ -30,3 +30,4 @@ const order_validators_1 = require("../../validators/user/order.validators");
 exports.orderRouter = (0, express_1.Router)();
 exports.orderRouter.get("/", orderController.index);
 exports.orderRouter.post("/", order_validators_1.OrderValidators, orderController.store);
+exports.orderRouter.get("/:id", orderController.show);

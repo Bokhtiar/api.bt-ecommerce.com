@@ -32,30 +32,29 @@ const orderCreate = async ({
   userID: Types.ObjectId;
   documents: IOrderCreate;
 }): Promise<IOrder | null> => {
+  const results = await Cart.find({ order: null, user: userID });
 
-    const results = await Cart.find({order: null, user: userID})
+  /* store documents */
+  const newOrder = new Order({
+    user: documents.user,
+    name: documents.name,
+    email: documents.email,
+    phone: documents.phone,
+    location: documents.location,
+    note: documents.note,
+    payment_name: documents.payment_name,
+    payment_number: documents.payment_number,
+    payment_txid: documents.payment_txid,
+  });
 
-    /* store documents */
-    const newOrder = new Order({
-        user: documents.user,
-        name:documents.name,
-        email:documents.email,
-        phone:documents.phone,
-        location:documents.location,
-        note:documents.note,
-        payment_name:documents.payment_name,
-        payment_number:documents.payment_number,
-        payment_txid:documents.payment_txid,
-    })
-
-    /* find by cart item, each cart item push order_id */
-    if(newOrder){
-        results.forEach(element => {
-            element.order = newOrder._id
-            element.save()
-        });
-    }
-    return newOrder.save()
+  /* find by cart item, each cart item push order_id */
+  if (newOrder) {
+    results.forEach((element) => {
+      element.order = newOrder._id;
+      element.save();
+    });
+  }
+  return newOrder.save();
 };
 
 /* specific order cart items */
@@ -66,7 +65,9 @@ const orderCartItems = async ({
   user_id: Types.ObjectId;
   order_id: Types.ObjectId;
 }): Promise<ICart[] | []> => {
-  return await Cart.find({ user: user_id, order: order_id });
+  return await Cart.find({ user: user_id, order: order_id })
+    .populate("product", "name sale_price regular_price image")
+    .populate("user", "name email phone");
 };
 
 export const userOrderService = {
