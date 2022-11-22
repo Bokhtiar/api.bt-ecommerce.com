@@ -18,7 +18,7 @@ const findAll = ({ _id }) => __awaiter(void 0, void 0, void 0, function* () {
 /* cart store documents */
 const addToCart = ({ product_id, user_id }) => __awaiter(void 0, void 0, void 0, function* () {
     /* find one cart already exist */
-    const existCart = yield cart_model_1.Cart.findOne({ user: user_id, product: product_id });
+    const existCart = yield cart_model_1.Cart.findOne({ user: user_id, product: product_id, order: null });
     if (existCart) {
         let existQty;
         existQty = existCart.quantity;
@@ -34,5 +34,5 @@ const addToCart = ({ product_id, user_id }) => __awaiter(void 0, void 0, void 0,
 });
 exports.cartService = {
     findAll,
-    addToCart
+    addToCart,
 };

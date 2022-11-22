@@ -30,7 +30,7 @@ const orderSchema: Schema = new Schema<IOrder>(
       trim: true,
     },
     note: {
-      type: Number,
+      type: String,
       required: true,
       default: null,
     },

@@ -20,12 +20,37 @@ const findAll = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
 const findOneById = ({ _id, user_id, }) => __awaiter(void 0, void 0, void 0, function* () {
     return yield order_model_1.Order.findOne({ _id: _id, user: user_id });
 });
+/* create new order */
+const orderCreate = ({ userID, documents, }) => __awaiter(void 0, void 0, void 0, function* () {
+    const results = yield cart_model_1.Cart.find({ order: null, user: userID });
+    /* store documents */
+    const newOrder = new order_model_1.Order({
+        user: documents.user,
+        name: documents.name,
+        email: documents.email,
+        phone: documents.phone,
+        location: documents.location,
+        note: documents.note,
+        payment_name: documents.payment_name,
+        payment_number: documents.payment_number,
+        payment_txid: documents.payment_txid,
+    });
+    /* find by cart item, each cart item push order_id */
+    if (newOrder) {
+        results.forEach(element => {
+            element.order = newOrder._id;
+            element.save();
+        });
+    }
+    return newOrder.save();
+});
 /* specific order cart items */
 const orderCartItems = ({ user_id, order_id, }) => __awaiter(void 0, void 0, void 0, function* () {
     return yield cart_model_1.Cart.find({ user: user_id, order: order_id });
 });
 exports.userOrderService = {
     findAll,
+    orderCreate,
     findOneById,
     orderCartItems,
 };

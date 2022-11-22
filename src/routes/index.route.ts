@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { cartRouter } from "./user/cart.route";
 import { UserRouter } from "./user/user.route";
+import { orderRouter } from "./user/order.route";
 import { AdminRouter } from "./admin/admin.route";
 import { productRouter } from "./admin/product.route";
 import { categoryRouter } from "./admin/category.route";
@@ -20,7 +21,8 @@ AppRouter.use("/admin/sub-category", adminPermission, subCategoryRoute);
 
 /* user routes */
 AppRouter.use("/user/auth", UserRouter);
-AppRouter.use("/cart",userPermission, cartRouter)
 AppRouter.use("/product", userProductRouter);
 AppRouter.use("/category", userCategoryRouter);
+AppRouter.use("/cart",userPermission, cartRouter)
+AppRouter.use("/order",userPermission, orderRouter)
 AppRouter.use("/sub-category", userSubCategoryRouter);

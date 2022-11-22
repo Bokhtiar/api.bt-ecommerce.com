@@ -10,7 +10,7 @@ const findAll = async({_id}:{_id: Types.ObjectId}):Promise<ICart[] | []> => {
 /* cart store documents */
 const addToCart = async ({ product_id, user_id }: { product_id: Types.ObjectId, user_id: Types.ObjectId }): Promise<ICart | null> => {
     /* find one cart already exist */
-    const existCart = await Cart.findOne({ user: user_id, product: product_id })
+    const existCart = await Cart.findOne({ user: user_id, product: product_id, order: null })
     if (existCart) {
         let existQty: any;
         existQty = existCart.quantity
@@ -26,5 +26,5 @@ const addToCart = async ({ product_id, user_id }: { product_id: Types.ObjectId, 
 
 export const cartService = {
     findAll,
-    addToCart
+    addToCart,
 }

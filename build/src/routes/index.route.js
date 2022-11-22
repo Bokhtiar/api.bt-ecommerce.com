@@ -4,6 +4,7 @@ exports.AppRouter = void 0;
 const express_1 = require("express");
 const cart_route_1 = require("./user/cart.route");
 const user_route_1 = require("./user/user.route");
+const order_route_1 = require("./user/order.route");
 const admin_route_1 = require("./admin/admin.route");
 const product_route_1 = require("./admin/product.route");
 const category_route_1 = require("./admin/category.route");
@@ -20,7 +21,8 @@ exports.AppRouter.use("/admin/category", admin_permission_middleware_1.adminPerm
 exports.AppRouter.use("/admin/sub-category", admin_permission_middleware_1.adminPermission, subCategory_route_1.subCategoryRoute);
 /* user routes */
 exports.AppRouter.use("/user/auth", user_route_1.UserRouter);
-exports.AppRouter.use("/cart", user_permission_middleware_1.userPermission, cart_route_1.cartRouter);
 exports.AppRouter.use("/product", product_route_2.userProductRouter);
 exports.AppRouter.use("/category", category_route_2.userCategoryRouter);
+exports.AppRouter.use("/cart", user_permission_middleware_1.userPermission, cart_route_1.cartRouter);
+exports.AppRouter.use("/order", user_permission_middleware_1.userPermission, order_route_1.orderRouter);
 exports.AppRouter.use("/sub-category", subCategory_route_2.userSubCategoryRouter);
