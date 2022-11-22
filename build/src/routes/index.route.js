@@ -10,7 +10,6 @@ const product_route_2 = require("./user/product.route");
 const category_route_2 = require("./user/category.route");
 const subCategory_route_1 = require("./admin/subCategory.route");
 const subCategory_route_2 = require("./user/subCategory.route");
-const user_permission_middleware_1 = require("../middleware/user.permission.middleware");
 const admin_permission_middleware_1 = require("../middleware/admin.permission.middleware");
 exports.AppRouter = (0, express_1.Router)();
 exports.AppRouter.use("/admin/auth", admin_route_1.AdminRouter);
@@ -20,5 +19,5 @@ exports.AppRouter.use("/admin/sub-category", admin_permission_middleware_1.admin
 /* user routes */
 exports.AppRouter.use("/user/auth", user_route_1.UserRouter);
 exports.AppRouter.use("/product", product_route_2.userProductRouter);
-exports.AppRouter.use("/category", user_permission_middleware_1.userPermission, category_route_2.userCategoryRouter);
+exports.AppRouter.use("/category", category_route_2.userCategoryRouter);
 exports.AppRouter.use("/sub-category", subCategory_route_2.userSubCategoryRouter);

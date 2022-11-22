@@ -19,5 +19,5 @@ AppRouter.use("/admin/sub-category", adminPermission, subCategoryRoute);
 /* user routes */
 AppRouter.use("/user/auth", UserRouter);
 AppRouter.use("/product", userProductRouter);
-AppRouter.use("/category",userPermission, userCategoryRouter);
+AppRouter.use("/category", userCategoryRouter);
 AppRouter.use("/sub-category", userSubCategoryRouter);
