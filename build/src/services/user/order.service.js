@@ -48,7 +48,8 @@ const orderCreate = ({ userID, documents, }) => __awaiter(void 0, void 0, void 0
 const orderCartItems = ({ user_id, order_id, }) => __awaiter(void 0, void 0, void 0, function* () {
     return yield cart_model_1.Cart.find({ user: user_id, order: order_id })
         .populate("product", "name sale_price regular_price image")
-        .populate("user", "name email phone");
+        .populate("user", "name email phone")
+        .sort({ _id: -1 });
 });
 exports.userOrderService = {
     findAll,

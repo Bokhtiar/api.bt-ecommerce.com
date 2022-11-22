@@ -14,11 +14,13 @@ const subCategory_route_1 = require("./admin/subCategory.route");
 const subCategory_route_2 = require("./user/subCategory.route");
 const user_permission_middleware_1 = require("../middleware/user.permission.middleware");
 const admin_permission_middleware_1 = require("../middleware/admin.permission.middleware");
+const order_route_2 = require("./admin/order.route");
 exports.AppRouter = (0, express_1.Router)();
 exports.AppRouter.use("/admin/auth", admin_route_1.AdminRouter);
 exports.AppRouter.use("/admin/Product", admin_permission_middleware_1.adminPermission, product_route_1.productRouter);
 exports.AppRouter.use("/admin/category", admin_permission_middleware_1.adminPermission, category_route_1.categoryRouter);
 exports.AppRouter.use("/admin/sub-category", admin_permission_middleware_1.adminPermission, subCategory_route_1.subCategoryRoute);
+exports.AppRouter.use("/admin/order", admin_permission_middleware_1.adminPermission, order_route_2.adminOrderRouter);
 /* user routes */
 exports.AppRouter.use("/user/auth", user_route_1.UserRouter);
 exports.AppRouter.use("/product", product_route_2.userProductRouter);

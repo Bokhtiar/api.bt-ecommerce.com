@@ -67,7 +67,8 @@ const orderCartItems = async ({
 }): Promise<ICart[] | []> => {
   return await Cart.find({ user: user_id, order: order_id })
     .populate("product", "name sale_price regular_price image")
-    .populate("user", "name email phone");
+    .populate("user", "name email phone")
+    .sort({_id: -1});
 };
 
 export const userOrderService = {
