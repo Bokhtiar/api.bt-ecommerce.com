@@ -78,13 +78,19 @@ const show = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const { id } = req.params;
         const userID = req.user.id;
-        const results = yield order_service_1.userOrderService.orderCartItems({
+        /* order details info */
+        const orderDocuments = yield order_service_1.userOrderService.findOneById({
+            _id: new mongoose_1.Types.ObjectId(id),
+            user_id: new mongoose_1.Types.ObjectId(userID),
+        });
+        /* order cart items */
+        const cartItems = yield order_service_1.userOrderService.orderCartItems({
             user_id: new mongoose_1.Types.ObjectId(userID),
             order_id: new mongoose_1.Types.ObjectId(id),
         });
         res.status(200).json({
             status: true,
-            data: results,
+            data: { "Order info": orderDocuments, "Cart items": cartItems },
         });
     }
     catch (error) {

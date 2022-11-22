@@ -88,13 +88,21 @@ export const show = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
     const userID = req.user.id;
-    const results = await userOrderService.orderCartItems({
+
+    /* order details info */
+    const orderDocuments = await userOrderService.findOneById({
+      _id: new Types.ObjectId(id),
+      user_id: new Types.ObjectId(userID),
+    });
+
+    /* order cart items */
+    const cartItems = await userOrderService.orderCartItems({
       user_id: new Types.ObjectId(userID),
       order_id: new Types.ObjectId(id),
     });
     res.status(200).json({
       status: true,
-      data: results,
+      data: { "Order info":orderDocuments, "Cart items":cartItems },
     });
   } catch (error: any) {
     console.log(error);
