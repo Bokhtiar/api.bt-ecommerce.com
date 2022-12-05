@@ -10,9 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.destroy = exports.update = exports.show = exports.store = exports.index = void 0;
+const mongoose_1 = require("mongoose");
+const index_1 = require("../../services/rabbitmq/producer/index");
 const category_service_1 = require("../../services/admin/category.service");
 const pagination_helper_1 = require("../../helpers/pagination.helper");
-const mongoose_1 = require("mongoose");
 /* List of resources */
 const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -23,7 +24,7 @@ const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         /* Search from query */
         if (searchQuery) {
             results = yield category_service_1.adminCategoryService.searchByKey({
-                query: searchQuery.toString()
+                query: searchQuery.toString(),
             });
         }
         else {
@@ -60,9 +61,10 @@ const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
             icon,
             banner_image,
         };
-        yield category_service_1.adminCategoryService.categoryCreate({
-            documents: Object.assign({}, documents),
-        });
+        yield (0, index_1.mqProducer)({ queueName: "category", message: documents });
+        // await adminCategoryService.categoryCreate({
+        //   documents: { ...documents },
+        // });
         res.status(201).json({
             status: true,
             message: "Category Created.",

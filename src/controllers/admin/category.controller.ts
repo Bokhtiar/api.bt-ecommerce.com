@@ -1,8 +1,9 @@
-import { adminCategoryService } from "../../services/admin/category.service";
-import { Request, Response, NextFunction } from "express";
-import { paginate, paginateQueryParams } from "../../helpers/pagination.helper";
 import { Types } from "mongoose";
+import { Request, Response, NextFunction } from "express";
+import { mqProducer } from "../../services/rabbitmq/producer/index";
 import { ICategoryCreateOrUpdate } from "src/types/admin/category.types";
+import { adminCategoryService } from "../../services/admin/category.service";
+import { paginate, paginateQueryParams } from "../../helpers/pagination.helper";
 
 /* List of resources */
 export const index = async (
@@ -20,7 +21,7 @@ export const index = async (
     /* Search from query */
     if (searchQuery) {
       results = await adminCategoryService.searchByKey({
-        query: searchQuery.toString()
+        query: searchQuery.toString(),
       });
     } else {
       results = await adminCategoryService.findAll({ page, limit });
@@ -62,9 +63,10 @@ export const store = async (
       banner_image,
     };
 
-    await adminCategoryService.categoryCreate({
-      documents: { ...documents },
-    });
+    await mqProducer({ queueName: "category", message: documents });
+    // await adminCategoryService.categoryCreate({
+    //   documents: { ...documents },
+    // });
     res.status(201).json({
       status: true,
       message: "Category Created.",
