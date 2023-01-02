@@ -42,9 +42,9 @@ export const login = async (
       { expiresIn: "1d" }
     );
 
-    res.status(201).json({
+    res.status(200).json({
       status: true,
-      data: token,
+      token: token,
     });
   } catch (error: any) {
     if (error) {

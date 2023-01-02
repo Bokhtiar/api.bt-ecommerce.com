@@ -17,7 +17,11 @@ const findAll = () => __awaiter(void 0, void 0, void 0, function* () {
 });
 /* find one by specific resource */
 const findOneById = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield product_model_1.Product.findById(_id);
+    return yield product_model_1.Product.findById(_id).populate('category', 'name');
+});
+/* find all product */
+const findAllReleted = () => __awaiter(void 0, void 0, void 0, function* () {
+    return yield product_model_1.Product.find({});
 });
 exports.userProductService = {
     findAll,

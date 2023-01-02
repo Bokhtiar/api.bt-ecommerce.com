@@ -13,10 +13,15 @@ const findOneById = async ({
 }: {
   _id: Types.ObjectId;
 }): Promise<IProduct | null> => {
-  return await Product.findById(_id);
+  return await Product.findById(_id).populate('category', 'name');
 };
 
-export const userProductService = {
+/* find all product */
+const findAllReleted = async (): Promise<IProduct[] | []> => {
+  return await Product.find({})
+};
+
+export const userProductService = { 
   findAll,
   findOneById,
 };

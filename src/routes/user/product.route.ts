@@ -4,3 +4,4 @@ export const userProductRouter: Router = Router();
 
 userProductRouter.get("/", productController.index);
 userProductRouter.get("/:id", productController.show);
+userProductRouter.get("/releted/product/:id", productController.releted_product);

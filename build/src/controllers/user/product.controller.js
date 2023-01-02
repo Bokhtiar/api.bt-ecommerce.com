@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.show = exports.index = void 0;
+exports.releted_product = exports.show = exports.index = void 0;
 const mongoose_1 = require("mongoose");
 const product_service_1 = require("../../services/user/product.service");
 /* find all resoruce */
@@ -45,3 +45,15 @@ const show = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.show = show;
+/* product releted shows  */
+const releted_product = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+    }
+    catch (error) {
+        if (error) {
+            console.log(error);
+        }
+    }
+});
+exports.releted_product = releted_product;

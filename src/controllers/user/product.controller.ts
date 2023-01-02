@@ -36,3 +36,16 @@ export const show = async (req: Request, res: Response, next: NextFunction) => {
     next(error);
   }
 };
+ 
+/* product releted shows  */
+export const releted_product = async(req:Request, res:Response, next:NextFunction) => {
+  try {
+    const {id} = req.params
+
+
+  } catch (error:any) {
+    if(error) {
+      console.log(error);
+    }
+  }
+}

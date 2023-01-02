@@ -29,3 +29,4 @@ const productController = __importStar(require("../../controllers/user/product.c
 exports.userProductRouter = (0, express_1.Router)();
 exports.userProductRouter.get("/", productController.index);
 exports.userProductRouter.get("/:id", productController.show);
+exports.userProductRouter.get("/releted/product/:id", productController.releted_product);
