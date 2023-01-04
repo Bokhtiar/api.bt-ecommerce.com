@@ -40,8 +40,15 @@ const CartIncrement = ({ _id }) => __awaiter(void 0, void 0, void 0, function* (
     existQty = existCart.quantity;
     return yield cart_model_1.Cart.findByIdAndUpdate(_id, { $set: { quantity: existQty + 1 } });
 });
+const CartDecrement = ({ _id }) => __awaiter(void 0, void 0, void 0, function* () {
+    const existCart = yield cart_model_1.Cart.findOne({ _id: _id });
+    let existQty;
+    existQty = existCart.quantity;
+    return yield cart_model_1.Cart.findByIdAndUpdate(_id, { $set: { quantity: existQty - 1 } });
+});
 exports.cartService = {
     findAll,
     addToCart,
-    CartIncrement
+    CartIncrement,
+    CartDecrement
 };

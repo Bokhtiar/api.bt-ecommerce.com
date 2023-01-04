@@ -27,16 +27,24 @@ const addToCart = async ({ product_id, user_id }: { product_id: Types.ObjectId, 
 
 /* cart increment */
 const CartIncrement = async ({ _id }: { _id: Types.ObjectId }): Promise<ICart | null> => {
-    const existCart:any = await Cart.findOne({_id : _id })
-    console.log("exist cart",existCart.quantity);
-    
+    const existCart: any = await Cart.findOne({ _id: _id })
+    console.log("exist cart", existCart.quantity);
+
     let existQty: number
     existQty = existCart.quantity
     return await Cart.findByIdAndUpdate(_id, { $set: { quantity: existQty + 1 } })
 }
 
+const CartDecrement = async ({ _id }: { _id: Types.ObjectId }): Promise<ICart | null> => {
+    const existCart: any = await Cart.findOne({ _id: _id })
+    let existQty: number
+    existQty = existCart.quantity
+    return await Cart.findByIdAndUpdate(_id, { $set: { quantity: existQty - 1 } })
+}
+
 export const cartService = {
     findAll,
     addToCart,
-    CartIncrement
+    CartIncrement,
+    CartDecrement
 }

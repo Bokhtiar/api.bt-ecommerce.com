@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.increment = exports.store = exports.index = void 0;
+exports.decrement = exports.increment = exports.store = exports.index = void 0;
 const mongoose_1 = require("mongoose");
 const cart_service_1 = require("../../services/user/cart.service");
 /* specidic user find all cart */
@@ -53,7 +53,7 @@ const increment = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         yield cart_service_1.cartService.CartIncrement({ _id: new mongoose_1.Types.ObjectId(id) });
         res.status(201).json({
             status: true,
-            message: "Cart added"
+            message: "Cart quantity increment"
         });
     }
     catch (error) {
@@ -64,3 +64,20 @@ const increment = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.increment = increment;
+const decrement = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        yield cart_service_1.cartService.CartDecrement({ _id: new mongoose_1.Types.ObjectId(id) });
+        res.status(201).json({
+            status: true,
+            message: "Cart quantity decrement"
+        });
+    }
+    catch (error) {
+        if (error) {
+            console.log(error);
+            next(error);
+        }
+    }
+});
+exports.decrement = decrement;
