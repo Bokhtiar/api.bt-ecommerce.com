@@ -5,7 +5,7 @@ import mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
-import { mqCategoryConsumer } from "./src/services/rabbitmq/consumer/category.store";
+//import { mqCategoryConsumer } from "./src/services/rabbitmq/consumer/category.store";
 
 dotenv.config();
 
@@ -24,7 +24,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.listen(port, () => {
-  mqCategoryConsumer();
+  //mqCategoryConsumer();
   console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
 });
 

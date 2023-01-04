@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 export const adminPermission = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction 
 ) => {
   try {
     const token: any = await req.headers.authorization;

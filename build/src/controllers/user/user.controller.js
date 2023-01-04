@@ -39,9 +39,9 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
             name: account === null || account === void 0 ? void 0 : account.name,
             role: account === null || account === void 0 ? void 0 : account.role,
         }, process.env.JWT_SECRET, { expiresIn: "1d" });
-        res.status(201).json({
+        res.status(200).json({
             status: true,
-            data: token,
+            token: token,
         });
     }
     catch (error) {

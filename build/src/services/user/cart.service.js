@@ -13,7 +13,7 @@ exports.cartService = void 0;
 const cart_model_1 = require("../../models/cart.model");
 /* specific user find cart */
 const findAll = ({ _id }) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield cart_model_1.Cart.find({ user: _id, order: null });
+    return yield cart_model_1.Cart.find({ user: _id, order: null }).populate('product', 'name sale_price image quantity');
 });
 /* cart store documents */
 const addToCart = ({ product_id, user_id }) => __awaiter(void 0, void 0, void 0, function* () {

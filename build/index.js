@@ -10,7 +10,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
-const category_store_1 = require("./src/services/rabbitmq/consumer/category.store");
+//import { mqCategoryConsumer } from "./src/services/rabbitmq/consumer/category.store";
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT;
@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
     res.send("Express + TypeScript Server");
 });
 app.listen(port, () => {
-    (0, category_store_1.mqCategoryConsumer)();
+    //mqCategoryConsumer();
     console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
 });
 // DB Connection here

@@ -5,7 +5,7 @@ import { userAuthService } from '../../services/user/user.service'
 import { IUser, IUserCreateUpdate } from '../../types/user/user.types'
 
 /* login as a user */
-export const login = async (
+export const login = async ( 
     req: Request,
     res: Response,
     next: NextFunction
@@ -42,9 +42,9 @@ export const login = async (
             { expiresIn: "1d" }
         );
 
-        res.status(201).json({
+        res.status(200).json({
             status: true,
-            data: token,
+            token: token,
         });
     } catch (error: any) {
         if (error) {
