@@ -32,7 +32,16 @@ const addToCart = ({ product_id, user_id }) => __awaiter(void 0, void 0, void 0,
         return yield newCart.save();
     }
 });
+/* cart increment */
+const CartIncrement = ({ _id }) => __awaiter(void 0, void 0, void 0, function* () {
+    const existCart = yield cart_model_1.Cart.findOne({ _id: _id });
+    console.log("exist cart", existCart.quantity);
+    let existQty;
+    existQty = existCart.quantity;
+    return yield cart_model_1.Cart.findByIdAndUpdate(_id, { $set: { quantity: existQty + 1 } });
+});
 exports.cartService = {
     findAll,
     addToCart,
+    CartIncrement
 };

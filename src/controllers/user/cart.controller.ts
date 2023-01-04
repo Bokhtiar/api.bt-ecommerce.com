@@ -36,4 +36,22 @@ export const store = async (req: Request, res: Response, next: NextFunction) => 
         console.log(error);
         next(error)
     }
+} 
+
+export const increment = async(req:Request, res:Response, next:NextFunction) => {
+    try {
+        const { id } = req.params
+        await cartService.CartIncrement({_id: new Types.ObjectId(id)})
+        res.status(201).json({
+            status: true,
+            message: "Cart added"
+        })
+
+    } catch (error:any) {
+        if(error){
+            console.log(error);
+            next(error)
+            
+        }
+    }
 }
