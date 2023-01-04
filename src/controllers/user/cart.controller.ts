@@ -71,3 +71,20 @@ export const decrement = async (req: Request, res: Response, next: NextFunction)
         }
     }
 }
+
+/* destory */
+export const destroy = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.params
+        await cartService.CartDestroy({ _id: new Types.ObjectId(id) })
+        res.status(200).json({
+            status: true,
+            message: "Cart deleted"
+        })
+    } catch (error: any) {
+        if (error) {
+            console.log(error);
+            next(error)
+        }
+    }
+}

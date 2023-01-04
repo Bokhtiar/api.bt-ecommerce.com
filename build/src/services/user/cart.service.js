@@ -46,9 +46,13 @@ const CartDecrement = ({ _id }) => __awaiter(void 0, void 0, void 0, function* (
     existQty = existCart.quantity;
     return yield cart_model_1.Cart.findByIdAndUpdate(_id, { $set: { quantity: existQty - 1 } });
 });
+const CartDestroy = ({ _id }) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield cart_model_1.Cart.findByIdAndDelete({ _id });
+});
 exports.cartService = {
     findAll,
     addToCart,
     CartIncrement,
-    CartDecrement
+    CartDecrement,
+    CartDestroy
 };

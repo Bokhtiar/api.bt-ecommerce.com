@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.decrement = exports.increment = exports.store = exports.index = void 0;
+exports.destroy = exports.decrement = exports.increment = exports.store = exports.index = void 0;
 const mongoose_1 = require("mongoose");
 const cart_service_1 = require("../../services/user/cart.service");
 /* specidic user find all cart */
@@ -81,3 +81,21 @@ const decrement = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.decrement = decrement;
+/* destory */
+const destroy = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        yield cart_service_1.cartService.CartDestroy({ _id: new mongoose_1.Types.ObjectId(id) });
+        res.status(200).json({
+            status: true,
+            message: "Cart deleted"
+        });
+    }
+    catch (error) {
+        if (error) {
+            console.log(error);
+            next(error);
+        }
+    }
+});
+exports.destroy = destroy;

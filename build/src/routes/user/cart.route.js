@@ -31,3 +31,4 @@ exports.cartRouter.get("/", cartController.index);
 exports.cartRouter.post("/:id", cartController.store);
 exports.cartRouter.put("/increment/:id", cartController.increment);
 exports.cartRouter.put("/decrement/:id", cartController.decrement);
+exports.cartRouter.delete("/destroy/:id", cartController.destroy);

@@ -42,9 +42,14 @@ const CartDecrement = async ({ _id }: { _id: Types.ObjectId }): Promise<ICart | 
     return await Cart.findByIdAndUpdate(_id, { $set: { quantity: existQty - 1 } })
 }
 
+const CartDestroy = async ({ _id }: { _id: Types.ObjectId }): Promise<ICart | null> => {
+    return await Cart.findByIdAndDelete({_id})
+}
+
 export const cartService = {
     findAll,
     addToCart,
     CartIncrement,
-    CartDecrement
+    CartDecrement,
+    CartDestroy
 }
