@@ -11,9 +11,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.destroy = exports.update = exports.show = exports.store = exports.index = void 0;
 const mongoose_1 = require("mongoose");
-const index_1 = require("../../services/rabbitmq/producer/index");
 const category_service_1 = require("../../services/admin/category.service");
 const pagination_helper_1 = require("../../helpers/pagination.helper");
+const helpers_1 = require("../../helpers");
 /* List of resources */
 const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -51,20 +51,25 @@ const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         /* check already exist name */
         const isExistName = yield category_service_1.adminCategoryService.findOneByKey({ name: name });
         if (isExistName) {
-            return res.status(409).json({
+            return res.status(409).json(yield (0, helpers_1.HttpErrorResponse)({
                 status: false,
-                message: "Category already created.",
-            });
+                errors: [
+                    {
+                        field: "Name",
+                        message: "Category name already exists.",
+                    },
+                ],
+            }));
         }
         const documents = {
             name,
             icon,
             banner_image,
         };
-        yield (0, index_1.mqProducer)({ queueName: "category", message: documents });
-        // await adminCategoryService.categoryCreate({
-        //   documents: { ...documents },
-        // });
+        //await mqProducer({ queueName: "category", message: documents });
+        yield category_service_1.adminCategoryService.categoryCreate({
+            documents: Object.assign({}, documents),
+        });
         res.status(201).json({
             status: true,
             message: "Category Created.",
@@ -106,10 +111,15 @@ const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
         /* check unique name */
         const existWithName = yield category_service_1.adminCategoryService.findOneByKey({ name });
         if (existWithName && existWithName._id.toString() !== id) {
-            return res.status(409).json({
+            return res.status(409).json(yield (0, helpers_1.HttpErrorResponse)({
                 status: false,
-                message: "This name already exists.",
-            });
+                errors: [
+                    {
+                        field: "Name",
+                        message: "Category name already exists.",
+                    },
+                ],
+            }));
         }
         const documents = {
             name,
@@ -140,10 +150,15 @@ const destroy = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
             _id: new mongoose_1.Types.ObjectId(id),
         });
         if (!availableCategory) {
-            return res.status(404).json({
+            return res.status(404).json(yield (0, helpers_1.HttpErrorResponse)({
                 status: false,
-                message: "Category not found",
-            });
+                errors: [
+                    {
+                        field: "Category",
+                        message: "Category not found.",
+                    },
+                ],
+            }));
         }
         yield category_service_1.adminCategoryService.findOneByIdAndDelete({
             _id: new mongoose_1.Types.ObjectId(id),

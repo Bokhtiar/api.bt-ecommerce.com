@@ -4,14 +4,15 @@ import { mqProducer } from "../../services/rabbitmq/producer/index";
 import { ICategoryCreateOrUpdate } from "src/types/admin/category.types";
 import { adminCategoryService } from "../../services/admin/category.service";
 import { paginate, paginateQueryParams } from "../../helpers/pagination.helper";
+import { HttpErrorResponse } from "../../helpers";
 
 /* List of resources */
 export const index = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
-  try {
+) => { 
+  try { 
     let results: any = [];
 
     const totalItems = await adminCategoryService.countAll();
@@ -51,10 +52,17 @@ export const store = async (
     /* check already exist name */
     const isExistName = await adminCategoryService.findOneByKey({ name: name });
     if (isExistName) {
-      return res.status(409).json({
-        status: false,
-        message: "Category already created.",
-      });
+      return res.status(409).json(
+         await HttpErrorResponse({
+          status: false,
+          errors: [
+            {
+              field: "Name",
+              message: "Category name already exists.",
+            },
+          ],
+        })
+      );
     }
 
     const documents: ICategoryCreateOrUpdate = {
@@ -63,10 +71,10 @@ export const store = async (
       banner_image,
     };
 
-    await mqProducer({ queueName: "category", message: documents });
-    // await adminCategoryService.categoryCreate({
-    //   documents: { ...documents },
-    // });
+    //await mqProducer({ queueName: "category", message: documents });
+    await adminCategoryService.categoryCreate({
+      documents: { ...documents },
+    });
     res.status(201).json({
       status: true,
       message: "Category Created.",
@@ -112,10 +120,17 @@ export const update = async (
     /* check unique name */
     const existWithName = await adminCategoryService.findOneByKey({ name });
     if (existWithName && existWithName._id.toString() !== id) {
-      return res.status(409).json({
-        status: false,
-        message: "This name already exists.",
-      });
+      return res.status(409).json(
+        await HttpErrorResponse({
+          status: false,
+          errors: [
+            {
+              field: "Name",
+              message: "Category name already exists.",
+            },
+          ],
+        })
+      );
     }
 
     const documents: ICategoryCreateOrUpdate = {
@@ -152,10 +167,17 @@ export const destroy = async (
       _id: new Types.ObjectId(id),
     });
     if (!availableCategory) {
-      return res.status(404).json({
-        status: false,
-        message: "Category not found",
-      });
+      return res.status(404).json(
+        await HttpErrorResponse({
+          status: false,
+          errors: [
+            {
+              field: "Category",
+              message: "Category not found.",
+            },
+          ],
+        })
+      );
     }
 
     await adminCategoryService.findOneByIdAndDelete({

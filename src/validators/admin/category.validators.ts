@@ -6,7 +6,7 @@ export const categoryCreateUpdateValidator = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+) => { 
   const descriptor = <any>{
     name: {
       type: "string",
