@@ -26,7 +26,12 @@ const registration = ({ documents }) => __awaiter(void 0, void 0, void 0, functi
     });
     return yield newUser.save();
 });
+/* user profile */
+const profile = ({ _id }) => __awaiter(void 0, void 0, void 0, function* () {
+    return user_model_1.User.findOne({ _id });
+});
 exports.userAuthService = {
     findOneByKey,
-    registration
+    registration,
+    profile,
 };

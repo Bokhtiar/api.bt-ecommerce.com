@@ -8,7 +8,7 @@ export const index = async (req: Request, res: Response, next: NextFunction) => 
     try {
         const { id } = req.user
         const results = await cartService.findAll({ _id: new Types.ObjectId(id) })
-        const countCart = await cartService.CountDocument({_id: new Types.ObjectId(id)})
+        const countCart = await cartService.CountDocument({ _id: new Types.ObjectId(id) })
         res.status(200).json({
             status: true,
             data: results,
@@ -86,7 +86,7 @@ export const destroy = async (req: Request, res: Response, next: NextFunction) =
     } catch (error: any) {
         if (error) {
             console.log(error);
-            next(error) 
+            next(error)
         }
     }
 }

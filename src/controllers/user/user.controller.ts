@@ -1,11 +1,13 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 import { Request, Response, NextFunction } from 'express'
+import { Types } from 'mongoose';
+import { HttpErrorResponse } from '../../helpers';
 import { userAuthService } from '../../services/user/user.service'
 import { IUser, IUserCreateUpdate } from '../../types/user/user.types'
 
 /* login as a user */
-export const login = async ( 
+export const login = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -98,5 +100,23 @@ export const registration = async (req: Request, res: Response, next: NextFuncti
     } catch (error: any) {
         console.log(error)
         next(error)
+    }
+}
+
+/* specific user profile */
+export const profile = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { id } = req.user
+        const result = await userAuthService.profile({_id: new Types.ObjectId(id)})
+        res.status(200).json({
+            status: true,
+            data: result, 
+        })
+    } catch (error:any) {
+        if(error){
+            console.log(error);
+            HttpErrorResponse(error)
+            next(error)
+        }
     }
 }

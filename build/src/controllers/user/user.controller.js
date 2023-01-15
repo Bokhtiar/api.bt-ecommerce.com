@@ -9,9 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.registration = exports.login = void 0;
+exports.profile = exports.registration = exports.login = void 0;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const mongoose_1 = require("mongoose");
+const helpers_1 = require("../../helpers");
 const user_service_1 = require("../../services/user/user.service");
 /* login as a user */
 const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -93,3 +95,22 @@ const registration = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.registration = registration;
+/* specific user profile */
+const profile = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.user;
+        const result = yield user_service_1.userAuthService.profile({ _id: new mongoose_1.Types.ObjectId(id) });
+        res.status(200).json({
+            status: true,
+            data: result,
+        });
+    }
+    catch (error) {
+        if (error) {
+            console.log(error);
+            (0, helpers_1.HttpErrorResponse)(error);
+            next(error);
+        }
+    }
+});
+exports.profile = profile;

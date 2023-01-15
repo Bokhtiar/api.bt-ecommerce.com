@@ -1,5 +1,6 @@
 import { IUser, IUserCreateUpdate } from '../../types/user/user.types'
 import { User } from '../../models/user.model'
+import { Types } from 'mongoose'
 
 /* find specific resource key */
 const findOneByKey = async (document: any): Promise<IUser | null> => {
@@ -18,8 +19,13 @@ const registration = async ({ documents }: { documents: IUserCreateUpdate }): Pr
     return await newUser.save()
 }
 
+/* user profile */
+const profile = async ({ _id }: { _id: Types.ObjectId }):Promise<IUser| null> => {
+    return User.findOne({_id})
+}
 
 export const userAuthService = {
     findOneByKey,
-    registration
+    registration, 
+    profile,
 }

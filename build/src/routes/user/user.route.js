@@ -28,6 +28,8 @@ const express_1 = require("express");
 const login_validators_1 = require("../../validators/user/login.validators");
 const register_validators_1 = require("../../validators/user/register.validators");
 const userController = __importStar(require("../../controllers/user/user.controller"));
+const user_permission_middleware_1 = require("../../middleware/user.permission.middleware");
 exports.UserRouter = (0, express_1.Router)();
 exports.UserRouter.post("/login", login_validators_1.loginValidators, userController.login);
 exports.UserRouter.post("/register", register_validators_1.registrationValidator, userController.registration);
+exports.UserRouter.get("/profile", user_permission_middleware_1.userPermission, userController.profile);

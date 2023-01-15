@@ -83,7 +83,7 @@ const findOneByIdAndDelete = async ({
 };
 
 /* Search by key */
-const searchByKey = async ({query}:{query:string}): Promise<ICategory[] | []> => {
+const searchByKey = async ({ query }: { query: string }): Promise<ICategory[] | []> => {
   const queryRegExp = new RegExp(query, "i");
   return await Category.find(
     {

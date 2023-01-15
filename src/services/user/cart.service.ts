@@ -4,8 +4,8 @@ import { ICart } from '../../types/user/cart.types'
 
 
 /* sepecific user count cart list */
-const CountDocument = async({_id}:{_id:Types.ObjectId}):Promise<number> => {
-    return Cart.countDocuments({user: _id, order:null})
+const CountDocument = async ({ _id }: { _id: Types.ObjectId }): Promise<number> => {
+    return Cart.countDocuments({ user: _id, order: null })
 }
 
 /* specific user find cart */
@@ -49,7 +49,7 @@ const CartDecrement = async ({ _id }: { _id: Types.ObjectId }): Promise<ICart | 
 }
 
 const CartDestroy = async ({ _id }: { _id: Types.ObjectId }): Promise<ICart | null> => {
-    return await Cart.findByIdAndDelete({_id})
+    return await Cart.findByIdAndDelete({ _id })
 }
 
 export const cartService = {
