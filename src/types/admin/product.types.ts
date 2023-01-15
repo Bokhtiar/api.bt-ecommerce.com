@@ -19,6 +19,7 @@ export interface IProduct {
   sale_price: number;
   regular_price: number;
   image: string;
+  is_product: string;
   description?: string;
   quantity?: number;
   discount?: number;
@@ -31,6 +32,7 @@ export interface IProductCreateUpdate {
   sale_price: number;
   regular_price: number;
   image: string;
+  is_product: string;
   description?: string;
   quantity?: number;
   discount?: number | null;

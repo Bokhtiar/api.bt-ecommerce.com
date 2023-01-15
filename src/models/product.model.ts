@@ -61,6 +61,11 @@ const productSchema: Schema = new Schema<IProduct>(
       trim: true,
       default: false,
     },
+    is_product : {
+      type:String,
+      trim : true,
+      default : "regular"
+    }
   },
   {
     timestamps: true,

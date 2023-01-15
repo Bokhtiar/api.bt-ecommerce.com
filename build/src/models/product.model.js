@@ -55,6 +55,11 @@ const productSchema = new mongoose_1.Schema({
         trim: true,
         default: false,
     },
+    is_product: {
+        type: String,
+        trim: true,
+        default: "regular"
+    }
 }, {
     timestamps: true,
 });

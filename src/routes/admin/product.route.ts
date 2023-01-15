@@ -11,3 +11,4 @@ productRouter.post("/", productCreateUpdateValidator, productController.store);
 productRouter.get("/:id", productController.show);
 productRouter.put("/:id", productCreateUpdateValidator, productController.update);
 productRouter.delete("/:id", productController.destory);
+ 

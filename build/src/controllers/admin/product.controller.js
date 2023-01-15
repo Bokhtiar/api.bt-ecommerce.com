@@ -46,7 +46,7 @@ exports.index = index;
 /* store new resoruce */
 const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { category, subCategory, name, sale_price, regular_price, image, description, quantity, discount, } = req.body;
+        const { category, subCategory, name, sale_price, regular_price, image, description, quantity, discount, is_product } = req.body;
         /* check exist name*/
         const nameExist = yield product_service_1.adminProductService.findOnebykey({ name });
         if (nameExist) {
@@ -65,6 +65,7 @@ const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
             description,
             quantity,
             discount,
+            is_product
         };
         yield product_service_1.adminProductService.createProduct({ documents: Object.assign({}, documents) });
         res.status(201).json({
@@ -102,7 +103,7 @@ exports.show = show;
 const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const { category, subCategory, name, sale_price, regular_price, image, description, quantity, discount, } = req.body;
+        const { category, subCategory, name, sale_price, regular_price, image, description, quantity, discount, is_product, } = req.body;
         /* check unique name */
         const existWithName = yield product_service_1.adminProductService.findOnebykey({ name });
         if (existWithName && existWithName._id.toString() !== id) {
@@ -121,6 +122,7 @@ const update = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
             description,
             quantity,
             discount,
+            is_product,
         };
         yield product_service_1.adminProductService.findByIdAndUpdate({
             _id: new mongoose_1.Types.ObjectId(id),

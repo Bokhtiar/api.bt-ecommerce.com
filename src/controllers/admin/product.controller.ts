@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { adminProductService } from "../../services/admin/product.service";
 import {
-  IProduct,
   IProductCreateUpdate,
 } from "../../types/admin/product.types";
 import { paginate, paginateQueryParams } from "../../helpers/pagination.helper";
@@ -58,6 +57,7 @@ export const store = async (
       description,
       quantity,
       discount,
+      is_product
     } = req.body;
 
     /* check exist name*/
@@ -79,6 +79,7 @@ export const store = async (
       description,
       quantity,
       discount,
+      is_product
     };
 
     await adminProductService.createProduct({ documents: { ...documents } });
@@ -130,6 +131,7 @@ export const update = async (
       description,
       quantity,
       discount,
+      is_product,
     } = req.body;
 
     /* check unique name */
@@ -151,6 +153,7 @@ export const update = async (
       description,
       quantity,
       discount,
+      is_product,
     };
 
     await adminProductService.findByIdAndUpdate({
