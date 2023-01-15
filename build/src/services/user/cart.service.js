@@ -11,6 +11,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.cartService = void 0;
 const cart_model_1 = require("../../models/cart.model");
+/* sepecific user count cart list */
+const CountDocument = ({ _id }) => __awaiter(void 0, void 0, void 0, function* () {
+    return cart_model_1.Cart.countDocuments({ user: _id, order: null });
+});
 /* specific user find cart */
 const findAll = ({ _id }) => __awaiter(void 0, void 0, void 0, function* () {
     return yield cart_model_1.Cart.find({ user: _id, order: null }).populate('product', 'name sale_price image quantity');
@@ -50,6 +54,7 @@ const CartDestroy = ({ _id }) => __awaiter(void 0, void 0, void 0, function* () 
     return yield cart_model_1.Cart.findByIdAndDelete({ _id });
 });
 exports.cartService = {
+    CountDocument,
     findAll,
     addToCart,
     CartIncrement,

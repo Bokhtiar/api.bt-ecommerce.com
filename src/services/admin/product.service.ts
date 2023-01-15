@@ -19,7 +19,7 @@ const findOnebykey = async (params: any): Promise<IProduct | null> => {
 /* find One specific resource */
 const findOneById = async ({
   _id,
-}: {
+}: { 
   _id: Types.ObjectId;
 }): Promise<IProduct | null> => {
   return await Product.findById(_id).populate("category", "name").populate("subCategory", "name");

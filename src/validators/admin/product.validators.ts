@@ -35,15 +35,15 @@ export const productCreateUpdateValidator = async (
     },
 
     sale_price: {
-      type: "number",
+      type: "string",
       required: true,
       message: "Sale price is required.",
     },
 
     regular_price: {
-      type: "number",
+      type: "string",
       required: true,
-      message: "Sale price is required.",
+      message: "Regular price is required.",
     },
 
     image: {

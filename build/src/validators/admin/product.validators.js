@@ -43,14 +43,14 @@ const productCreateUpdateValidator = (req, res, next) => __awaiter(void 0, void 
             message: "Name is required.",
         },
         sale_price: {
-            type: "number",
+            type: "string",
             required: true,
             message: "Sale price is required.",
         },
         regular_price: {
-            type: "number",
+            type: "string",
             required: true,
-            message: "Sale price is required.",
+            message: "Regular price is required.",
         },
         image: {
             type: "url",

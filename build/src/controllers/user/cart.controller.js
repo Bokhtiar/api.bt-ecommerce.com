@@ -17,9 +17,11 @@ const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
     try {
         const { id } = req.user;
         const results = yield cart_service_1.cartService.findAll({ _id: new mongoose_1.Types.ObjectId(id) });
+        const countCart = yield cart_service_1.cartService.CountDocument({ _id: new mongoose_1.Types.ObjectId(id) });
         res.status(200).json({
             status: true,
-            data: results
+            data: results,
+            countCart: countCart
         });
     }
     catch (error) {
