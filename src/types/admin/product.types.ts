@@ -10,6 +10,8 @@ interface ISubCategory {
   name: string;
 }
 
+
+
 export interface IProduct {
   _id: Types.ObjectId;
   category: ICategory | Types.ObjectId;

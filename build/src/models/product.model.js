@@ -57,9 +57,9 @@ const productSchema = new mongoose_1.Schema({
     },
     is_product: {
         type: String,
-        trim: true,
-        default: "regular"
-    }
+        enum: ["regular", "flash_sale"],
+        default: "flash_sale",
+    },
 }, {
     timestamps: true,
 });

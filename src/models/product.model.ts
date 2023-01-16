@@ -6,7 +6,7 @@ const productSchema: Schema = new Schema<IProduct>(
     category: {
       type: Schema.Types.ObjectId,
       trim: true,
-      ref: "Category", 
+      ref: "Category",
       required: true,
     },
 
@@ -31,7 +31,7 @@ const productSchema: Schema = new Schema<IProduct>(
 
     sale_price: {
       type: Number,
-      trim: true,
+      trim: true, 
       required: true,
     },
 
@@ -61,11 +61,11 @@ const productSchema: Schema = new Schema<IProduct>(
       trim: true,
       default: false,
     },
-    is_product : {
-      type:String,
-      trim : true,
-      default : "regular"
-    }
+    is_product: {
+      type: String,
+      enum: ["regular", "flash_sale"],
+      default: "flash_sale",
+    },
   },
   {
     timestamps: true,
