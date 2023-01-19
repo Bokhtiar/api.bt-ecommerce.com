@@ -6,8 +6,8 @@ import {
 import { paginate, paginateQueryParams } from "../../helpers/pagination.helper";
 import { Types } from "mongoose";
 
-/* find all regular product resource by paginate */
-export const regularProductIndex = async (
+/* find all resource by paginate */
+export const index = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -15,7 +15,7 @@ export const regularProductIndex = async (
   try {
     let results: any = [];
 
-    const totalItems = await adminProductService.countAllRegular();
+    const totalItems = await adminProductService.countAll();
     const { limit, page } = paginateQueryParams(req.query);
     const searchQuery = req.query.query;
 
@@ -25,7 +25,7 @@ export const regularProductIndex = async (
         query: searchQuery.toString(),
       });
     } else {
-      results = await adminProductService.findAllRegularProduct({ page, limit });
+      results = await adminProductService.findAll({ page, limit });
     }
     res.status(200).json({
       status: true,
@@ -39,28 +39,6 @@ export const regularProductIndex = async (
     }
   }
 };
-
-/* find all flash sale product resource by paginate */
-export const flashSaleProductIndex = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-
-    const totalItems = await adminProductService.countAllRegular();
-    const { limit, page } = paginateQueryParams(req.query);
-    
-      const results = await adminProductService.findAllFlashSaleProduct({ page, limit });
-    
-    res.status(200).json({
-      status: true,
-      data: results,
-      paginate: paginate({ total_items: totalItems, page, limit }),
-    });
-  } catch (error: any) {
-    console.log(error);
-    next(error)
-  }
-}
-
-
 
 /* store new resoruce */
 export const store = async (
@@ -96,7 +74,7 @@ export const store = async (
       flash_sale = "flash_sale"
     }
     const documents: IProductCreateUpdate = {
-      category: new Types.ObjectId(category),
+      category :  new Types.ObjectId(category),
       subCategory: new Types.ObjectId(subCategory),
       name,
       sale_price,

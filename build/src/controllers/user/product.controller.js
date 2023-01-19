@@ -9,13 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.releted_product = exports.show = exports.index = void 0;
+exports.releted_product = exports.show = exports.flashSaleProductIndex = exports.RegularProductIndex = void 0;
 const mongoose_1 = require("mongoose");
 const product_service_1 = require("../../services/user/product.service");
-/* find all resoruce */
-const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+/* find all regular product resoruce */
+const RegularProductIndex = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const results = yield product_service_1.userProductService.findAll();
+        const results = yield product_service_1.userProductService.findAllRegularProduct();
         res.status(200).json({
             status: true,
             data: results,
@@ -26,7 +26,22 @@ const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         next(error);
     }
 });
-exports.index = index;
+exports.RegularProductIndex = RegularProductIndex;
+/* find All flash sale product */
+const flashSaleProductIndex = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const results = yield product_service_1.userProductService.findAllFlashSaleProduct();
+        res.status(200).json({
+            status: true,
+            data: results,
+        });
+    }
+    catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+exports.flashSaleProductIndex = flashSaleProductIndex;
 /* specific resource show */
 const show = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {

@@ -2,10 +2,15 @@ import { Types } from "mongoose";
 import { IProduct } from "src/types/user/product.types";
 import { Product } from "../../models/product.model";
 
-/* find all product */
-const findAll = async (): Promise<IProduct[] | []> => {
-  return await Product.find();
+/* find all regular product */
+const findAllRegularProduct = async (): Promise<IProduct[] | []> => {
+  return await Product.find({is_product: "regular"});
 };
+
+/* find all flash sale product */
+const findAllFlashSaleProduct = async(): Promise<IProduct[] | []> => {
+  return await Product.find({is_product: "flash_sale"})
+}
 
 /* find one by specific resource */
 const findOneById = async ({
@@ -22,6 +27,7 @@ const findAllReleted = async (): Promise<IProduct[] | []> => {
 };
 
 export const userProductService = { 
-  findAll,
+  findAllRegularProduct,
+  findAllFlashSaleProduct,
   findOneById,
 };

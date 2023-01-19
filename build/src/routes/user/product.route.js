@@ -27,6 +27,7 @@ exports.userProductRouter = void 0;
 const express_1 = require("express");
 const productController = __importStar(require("../../controllers/user/product.controller"));
 exports.userProductRouter = (0, express_1.Router)();
-exports.userProductRouter.get("/", productController.index);
+exports.userProductRouter.get("/regular", productController.RegularProductIndex);
+exports.userProductRouter.get("/flash-sale", productController.flashSaleProductIndex);
 exports.userProductRouter.get("/:id", productController.show);
 exports.userProductRouter.get("/releted/product/:id", productController.releted_product);

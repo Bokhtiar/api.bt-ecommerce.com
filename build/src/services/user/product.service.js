@@ -11,9 +11,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.userProductService = void 0;
 const product_model_1 = require("../../models/product.model");
-/* find all product */
-const findAll = () => __awaiter(void 0, void 0, void 0, function* () {
-    return yield product_model_1.Product.find();
+/* find all regular product */
+const findAllRegularProduct = () => __awaiter(void 0, void 0, void 0, function* () {
+    return yield product_model_1.Product.find({ is_product: "regular" });
+});
+/* find all flash sale product */
+const findAllFlashSaleProduct = () => __awaiter(void 0, void 0, void 0, function* () {
+    return yield product_model_1.Product.find({ is_product: "flash_sale" });
 });
 /* find one by specific resource */
 const findOneById = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
@@ -24,6 +28,7 @@ const findAllReleted = () => __awaiter(void 0, void 0, void 0, function* () {
     return yield product_model_1.Product.find({});
 });
 exports.userProductService = {
-    findAll,
+    findAllRegularProduct,
+    findAllFlashSaleProduct,
     findOneById,
 };

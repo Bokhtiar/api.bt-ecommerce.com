@@ -2,14 +2,14 @@ import { Types } from "mongoose";
 import { Request, Response, NextFunction } from "express";
 import { userProductService } from "../../services/user/product.service";
 
-/* find all resoruce */
-export const index = async (
+/* find all regular product resoruce */
+export const RegularProductIndex = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const results = await userProductService.findAll();
+    const results = await userProductService.findAllRegularProduct();
     res.status(200).json({
       status: true,
       data: results,
@@ -19,6 +19,20 @@ export const index = async (
     next(error);
   }
 };
+
+/* find All flash sale product */
+export const flashSaleProductIndex = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const results = await userProductService.findAllFlashSaleProduct()
+    res.status(200).json({
+      status: true,
+      data: results,
+    })
+  } catch (error: any) {
+    console.log(error);
+    next(error)
+  }
+}
 
 /* specific resource show */
 export const show = async (req: Request, res: Response, next: NextFunction) => {
@@ -36,15 +50,15 @@ export const show = async (req: Request, res: Response, next: NextFunction) => {
     next(error);
   }
 };
- 
+
 /* product releted shows  */
-export const releted_product = async(req:Request, res:Response, next:NextFunction) => {
+export const releted_product = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const {id} = req.params
+    const { id } = req.params
 
 
-  } catch (error:any) {
-    if(error) {
+  } catch (error: any) {
+    if (error) {
       console.log(error);
     }
   }

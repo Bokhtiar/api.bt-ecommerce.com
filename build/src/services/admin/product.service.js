@@ -12,13 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.adminProductService = exports.searchByKey = void 0;
 const slug = require("slug");
 const product_model_1 = require("../../models/product.model");
-/* count all regular product */
-const countAllRegular = () => __awaiter(void 0, void 0, void 0, function* () {
-    return yield product_model_1.Product.countDocuments({ is_product: "regular" });
-});
-/* count all flash sale product */
-const countAllFlasSale = () => __awaiter(void 0, void 0, void 0, function* () {
-    return yield product_model_1.Product.countDocuments({ is_product: "flash_sale" });
+/* count all */
+const countAll = () => __awaiter(void 0, void 0, void 0, function* () {
+    return yield product_model_1.Product.countDocuments();
 });
 /* specific reosurce  find one by key */
 const findOnebykey = (params) => __awaiter(void 0, void 0, void 0, function* () {
@@ -29,17 +25,9 @@ const findOnebykey = (params) => __awaiter(void 0, void 0, void 0, function* () 
 const findOneById = ({ _id, }) => __awaiter(void 0, void 0, void 0, function* () {
     return yield product_model_1.Product.findById(_id).populate("category", "name").populate("subCategory", "name");
 });
-/* find all regular product reosurce by paginate */
-const findAllRegularProduct = ({ page, limit, }) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield product_model_1.Product.find({ is_product: 'regular' })
-        .sort({ _id: -1 })
-        .skip(page * limit - limit)
-        .limit(limit)
-        .exec();
-});
-/* find all flash sale reosurce by paginate */
-const findAllFlashSaleProduct = ({ page, limit, }) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield product_model_1.Product.find({ is_product: 'flash_sale' })
+/* find all reosurce by paginate */
+const findAll = ({ page, limit, }) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield product_model_1.Product.find()
         .sort({ _id: -1 })
         .skip(page * limit - limit)
         .limit(limit)
@@ -81,10 +69,8 @@ const searchByKey = ({ query, }) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.searchByKey = searchByKey;
 exports.adminProductService = {
-    findAllRegularProduct,
-    findAllFlashSaleProduct,
-    countAllFlasSale,
-    countAllRegular,
+    findAll,
+    countAll,
     searchByKey: exports.searchByKey,
     findOneById,
     findOnebykey,
