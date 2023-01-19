@@ -6,9 +6,14 @@ import {
   IProductCreateUpdate,
 } from "../../types/admin/product.types";
 
-/* count all */
-const countAll = async (): Promise<number> => {
-  return await Product.countDocuments();
+/* count all regular product */
+const countAllRegular = async (): Promise<number> => {
+  return await Product.countDocuments({is_product: "regular"});
+};
+
+/* count all flash sale product */
+const countAllFlasSale = async (): Promise<number> => {
+  return await Product.countDocuments({is_product: "flash_sale"});
 };
 
 /* specific reosurce  find one by key */
@@ -25,15 +30,30 @@ const findOneById = async ({
   return await Product.findById(_id).populate("category", "name").populate("subCategory", "name");
 };
 
-/* find all reosurce by paginate */
-const findAll = async ({
+/* find all regular product reosurce by paginate */
+const findAllRegularProduct = async ({
   page,
   limit,
-}: {
+}: { 
   page: number;
   limit: number;
 }): Promise<IProduct[] | []> => {
-  return await Product.find()
+  return await Product.find({is_product: 'regular'})
+    .sort({ _id: -1 })
+    .skip(page * limit - limit)
+    .limit(limit)
+    .exec();
+};
+
+/* find all flash sale reosurce by paginate */
+const findAllFlashSaleProduct = async ({
+  page,
+  limit,
+}: { 
+  page: number;
+  limit: number;
+}): Promise<IProduct[] | []> => {
+  return await Product.find({is_product: 'flash_sale'})
     .sort({ _id: -1 })
     .skip(page * limit - limit)
     .limit(limit)
@@ -101,8 +121,10 @@ export const searchByKey = async ({
 };
 
 export const adminProductService = {
-  findAll,
-  countAll,
+  findAllRegularProduct,
+  findAllFlashSaleProduct,
+  countAllFlasSale,
+  countAllRegular,
   searchByKey,
   findOneById,
   findOnebykey,

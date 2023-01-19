@@ -9,15 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.destory = exports.update = exports.show = exports.store = exports.index = void 0;
+exports.destory = exports.update = exports.show = exports.store = exports.flashSaleProductIndex = exports.regularProductIndex = void 0;
 const product_service_1 = require("../../services/admin/product.service");
 const pagination_helper_1 = require("../../helpers/pagination.helper");
 const mongoose_1 = require("mongoose");
-/* find all resource by paginate */
-const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+/* find all regular product resource by paginate */
+const regularProductIndex = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let results = [];
-        const totalItems = yield product_service_1.adminProductService.countAll();
+        const totalItems = yield product_service_1.adminProductService.countAllRegular();
         const { limit, page } = (0, pagination_helper_1.paginateQueryParams)(req.query);
         const searchQuery = req.query.query;
         /* Search from query */
@@ -27,7 +27,7 @@ const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
             });
         }
         else {
-            results = yield product_service_1.adminProductService.findAll({ page, limit });
+            results = yield product_service_1.adminProductService.findAllRegularProduct({ page, limit });
         }
         res.status(200).json({
             status: true,
@@ -42,7 +42,25 @@ const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         }
     }
 });
-exports.index = index;
+exports.regularProductIndex = regularProductIndex;
+/* find all flash sale product resource by paginate */
+const flashSaleProductIndex = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const totalItems = yield product_service_1.adminProductService.countAllRegular();
+        const { limit, page } = (0, pagination_helper_1.paginateQueryParams)(req.query);
+        const results = yield product_service_1.adminProductService.findAllFlashSaleProduct({ page, limit });
+        res.status(200).json({
+            status: true,
+            data: results,
+            paginate: (0, pagination_helper_1.paginate)({ total_items: totalItems, page, limit }),
+        });
+    }
+    catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+exports.flashSaleProductIndex = flashSaleProductIndex;
 /* store new resoruce */
 const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -55,6 +73,11 @@ const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
                 message: "Product name already exist",
             });
         }
+        let productType;
+        (function (productType) {
+            productType["regular"] = "regular";
+            productType["flash_sale"] = "flash_sale";
+        })(productType || (productType = {}));
         const documents = {
             category: new mongoose_1.Types.ObjectId(category),
             subCategory: new mongoose_1.Types.ObjectId(subCategory),
@@ -65,7 +88,7 @@ const store = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
             description,
             quantity,
             discount,
-            is_product
+            is_product: productType.regular
         };
         yield product_service_1.adminProductService.createProduct({ documents: Object.assign({}, documents) });
         res.status(201).json({
