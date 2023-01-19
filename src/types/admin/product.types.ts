@@ -3,14 +3,14 @@ import { Types } from "mongoose";
 interface ICategory {
   _id: Types.ObjectId;
   name: string;
-}
+} 
 
 interface ISubCategory {
   _id: Types.ObjectId;
   name: string;
 }
 
-
+ 
 
 export interface IProduct {
   _id: Types.ObjectId;
@@ -21,7 +21,7 @@ export interface IProduct {
   sale_price: number;
   regular_price: number;
   image: string;
-  is_product: string;
+  is_product: "regular" | "flash_sale";
   description?: string;
   quantity?: number;
   discount?: number;
@@ -34,7 +34,7 @@ export interface IProductCreateUpdate {
   sale_price: number;
   regular_price: number;
   image: string;
-  is_product: string;
+  is_product: "regular" | "flash_sale";
   description?: string;
   quantity?: number;
   discount?: number | null;

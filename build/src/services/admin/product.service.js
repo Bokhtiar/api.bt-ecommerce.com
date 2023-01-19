@@ -46,6 +46,7 @@ const createProduct = ({ documents, }) => __awaiter(void 0, void 0, void 0, func
         description: documents.description,
         quantity: documents.quantity,
         discount: documents.discount,
+        is_product: documents.is_product,
     });
     return yield newResource.save();
 });
