@@ -90,7 +90,7 @@ const show = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () 
         });
         res.status(200).json({
             status: true,
-            data: { "Order info": orderDocuments, "Cart items": cartItems },
+            data: { "Order": orderDocuments, "Cart": cartItems },
         });
     }
     catch (error) {

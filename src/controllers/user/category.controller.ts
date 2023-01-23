@@ -12,6 +12,7 @@ export const index = async (
     const resutls = await userCategoryService.findAll();
     res.status(200).json({
       status: true,
+      message: "category list",
       data: resutls,
     });
   } catch (error: any) {

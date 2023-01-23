@@ -28,7 +28,7 @@ const OrderValidators = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
             message: "Email is required.",
         },
         phone: {
-            type: "number",
+            type: "string",
             required: true,
             message: "Phone number is required.",
         },
@@ -43,7 +43,7 @@ const OrderValidators = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
             message: "Payment getway name is required.",
         },
         payment_number: {
-            type: "number",
+            type: "string",
             required: true,
             message: "Payment account number is required.",
         },

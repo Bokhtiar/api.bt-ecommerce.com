@@ -19,7 +19,7 @@ export const OrderValidators = async (
       message: "Email is required.",
     },
     phone: {
-      type: "number",
+      type: "string",
       required: true,
       message: "Phone number is required.",
     },
@@ -34,7 +34,7 @@ export const OrderValidators = async (
       message: "Payment getway name is required.",
     },
     payment_number: {
-      type: "number",
+      type: "string",
       required: true,
       message: "Payment account number is required.",
     },

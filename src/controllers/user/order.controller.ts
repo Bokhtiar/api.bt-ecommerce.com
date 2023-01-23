@@ -102,7 +102,7 @@ export const show = async (req: Request, res: Response, next: NextFunction) => {
     });
     res.status(200).json({
       status: true,
-      data: { "Order info":orderDocuments, "Cart items":cartItems },
+      data: { "Order":orderDocuments, "Cart":cartItems },
     });
   } catch (error: any) {
     console.log(error);
