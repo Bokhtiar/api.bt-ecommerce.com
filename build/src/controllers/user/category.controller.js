@@ -18,6 +18,7 @@ const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         const resutls = yield category_service_1.userCategoryService.findAll();
         res.status(200).json({
             status: true,
+            message: "category list",
             data: resutls,
         });
     }
