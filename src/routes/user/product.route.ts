@@ -5,5 +5,5 @@ export const userProductRouter: Router = Router();
 userProductRouter.get("/regular", productController.RegularProductIndex);
 userProductRouter.get("/flash-sale", productController.flashSaleProductIndex);
 userProductRouter.get("/:id", productController.show);
-userProductRouter.get("/releted/product/:id", productController.releted_product);
- 
+userProductRouter.get("/releted/:id", productController.releted_product);
+   

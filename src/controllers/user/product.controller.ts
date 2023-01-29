@@ -21,18 +21,22 @@ export const RegularProductIndex = async (
 };
 
 /* find All flash sale product */
-export const flashSaleProductIndex = async (req: Request, res: Response, next: NextFunction) => {
+export const flashSaleProductIndex = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const results = await userProductService.findAllFlashSaleProduct()
+    const results = await userProductService.findAllFlashSaleProduct();
     res.status(200).json({
       status: true,
       data: results,
-    })
+    });
   } catch (error: any) {
     console.log(error);
-    next(error)
+    next(error);
   }
-}
+};
 
 /* specific resource show */
 export const show = async (req: Request, res: Response, next: NextFunction) => {
@@ -52,14 +56,23 @@ export const show = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 /* product releted shows  */
-export const releted_product = async (req: Request, res: Response, next: NextFunction) => {
+export const releted_product = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const { id } = req.params
-
-
+    const { id } = req.params;
+    const results = await userProductService.findAllReleted({_id: new Types.ObjectId(id)})
+    
+    res.status(200).json({
+      status: true,
+      data: results,
+    });
   } catch (error: any) {
     if (error) {
       console.log(error);
+      next(error)
     }
   }
-}
+};

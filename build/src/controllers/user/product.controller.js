@@ -64,10 +64,16 @@ exports.show = show;
 const releted_product = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
+        const results = yield product_service_1.userProductService.findAllReleted({ _id: new mongoose_1.Types.ObjectId(id) });
+        res.status(200).json({
+            status: true,
+            data: results,
+        });
     }
     catch (error) {
         if (error) {
             console.log(error);
+            next(error);
         }
     }
 });

@@ -27,7 +27,7 @@ const findOneById = async ({
 
 /* find all reosurce by paginate */
 const findAll = async ({
-  page,
+  page, 
   limit,
 }: {
   page: number;

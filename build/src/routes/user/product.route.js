@@ -30,4 +30,4 @@ exports.userProductRouter = (0, express_1.Router)();
 exports.userProductRouter.get("/regular", productController.RegularProductIndex);
 exports.userProductRouter.get("/flash-sale", productController.flashSaleProductIndex);
 exports.userProductRouter.get("/:id", productController.show);
-exports.userProductRouter.get("/releted/product/:id", productController.releted_product);
+exports.userProductRouter.get("/releted/:id", productController.releted_product);
