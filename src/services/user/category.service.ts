@@ -28,9 +28,7 @@ const categoryHasAssingProduct = async ({
 }: {
   _id: Types.ObjectId;
 }): Promise<IProduct[] | []> => {
-  const category:any = await Product.findOne({_id})
-  
-  return await Product.find({ category: category.category });;
+  return await Product.find({ category: _id });
 };
 
 /* find category has assign sub-category */
